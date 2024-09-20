@@ -2,7 +2,7 @@
   <!-- Hero Section -->
   <div class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-16 text-center relative">
-      <h2 class="text-blue-900 text-base font-semibold mb-4">ONLINE RESUME BUILDER</h2>
+      <h2 class="text-blue-900 text-base font-semibold mb-4 mb mt-16">ONLINE RESUME BUILDER</h2>
       <h1 class="text-5xl font-bold text-gray-800 mb-6">
         Only 2% of resumes make it past<br />
         the first round. Be in the top 2%
@@ -46,7 +46,11 @@
         </div>
 
         <div class="w-full md:w-3/4 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div v-for="review in reviews" :key="review.id" class="bg-white p-6 rounded-lg shadow-md">
+          <div
+            v-for="review in reviews"
+            :key="review.id"
+            class="bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1"
+          >
             <div class="text-blue-600 text-xl mb-2">★★★★★</div>
             <h3 class="text-xl font-bold mb-2">{{ review.title }}</h3>
             <p class="text-base mb-4 text-gray-700">{{ review.content }}</p>
@@ -184,7 +188,7 @@
             <div class="text-3xl text-green-400 mr-4">★★★★★</div>
             <div>
               <div class="text-xl font-bold">4.9 out of 5</div>
-              <div class="text-sm">based on 51,569 reviews of Community</div>
+              <div class="text-sm">based on 51,569 reviews from Community</div>
             </div>
           </div>
         </div>
@@ -208,6 +212,17 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import easyBuilderIcon from '@/assets/icons/easy-builder.png'
+import spellCheckerIcon from '@/assets/icons/spell-check.png'
+import dataSafeIcon from '@/assets/icons/safe-data.png'
+import summaryGeneratorIcon from '@/assets/icons/summary.png'
+import approvedTemplatesIcon from '@/assets/icons/template.png'
+import aiPhrasesIcon from '@/assets/icons/ai-pre-written.png'
+import optimizedResumesIcon from '@/assets/icons/optimized-cv.png'
+import multiFormatIcon from '@/assets/icons/multi-format.png'
+import coverLettersIcon from '@/assets/icons/cover-mail.png'
+
 const reviews = [
   {
     id: 1,
@@ -258,16 +273,6 @@ const reviews = [
     date: '1 day ago'
   }
 ]
-
-import easyBuilderIcon from '@/assets/icons/easy-builder.png'
-import spellCheckerIcon from '@/assets/icons/spell-check.png'
-import dataSafeIcon from '@/assets/icons/safe-data.png'
-import summaryGeneratorIcon from '@/assets/icons/summary.png'
-import approvedTemplatesIcon from '@/assets/icons/template.png'
-import aiPhrasesIcon from '@/assets/icons/ai-pre-written.png'
-import optimizedResumesIcon from '@/assets/icons/optimized-cv.png'
-import multiFormatIcon from '@/assets/icons/multi-format.png'
-import coverLettersIcon from '@/assets/icons/cover-mail.png'
 
 const features = [
   {
@@ -323,6 +328,27 @@ const features = [
     icon: coverLettersIcon
   }
 ]
+
+const isHeaderVisible = ref(true)
+let lastScrollPosition = 0
+
+const handleScroll = () => {
+  const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+  if (currentScrollPosition < lastScrollPosition) {
+    isHeaderVisible.value = true
+  } else {
+    isHeaderVisible.value = false
+  }
+  lastScrollPosition = currentScrollPosition
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>
@@ -355,5 +381,26 @@ const features = [
 
 .text-green-400 {
   color: #4ade80;
+}
+.transition {
+  transition-property: all;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover\:shadow-lg:hover {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.hover\:-translate-y-1:hover {
+  transform: translateY(-0.25rem);
 }
 </style>
