@@ -38,7 +38,7 @@
 
       <div class="flex flex-col md:flex-row justify-between items-start">
         <div class="w-full md:w-1/4 text-center md:text-left mb-8 md:mb-0">
-          <div class="text-blue-900 text-4xl mb-2">★★★★★</div>
+          <div class="text-blue-600 text-4xl mb-2">★★★★★</div>
           <div class="text-3xl font-bold mb-2">4.9 out of 5</div>
           <div class="text-xl font-semibold mb-2">From Community</div>
           <p class="text-base text-gray-600">based on 51,569 reviews</p>
@@ -46,7 +46,7 @@
 
         <div class="w-full md:w-3/4 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div v-for="review in reviews" :key="review.id" class="bg-white p-6 rounded-lg shadow-md">
-            <div class="text-blue-900 text-xl mb-2">★★★★★</div>
+            <div class="text-blue-600 text-xl mb-2">★★★★★</div>
             <h3 class="text-xl font-bold mb-2">{{ review.title }}</h3>
             <p class="text-base mb-4 text-gray-700">{{ review.content }}</p>
             <p class="text-sm text-gray-500">{{ review.author }} • {{ review.date }}</p>
@@ -69,9 +69,9 @@
   </div>
 
   <!-- Divider line -->
-  <hr class="border-t border-gray-200 my-16 mx-auto" />
+  <hr class="border-t border-gray-200 mx-auto" />
 
-  <div class="bg-white py-16">
+  <div class="bg-gray-100 py-16">
     <div class="container mx-auto px-4 max-w-6xl">
       <h2 class="text-4xl font-bold mb-16 text-gray-800 text-center">
         Features designed to help you win your<br />dream job
@@ -81,9 +81,84 @@
         <div v-for="feature in features" :key="feature.title" class="flex items-start">
           <img :src="feature.icon" :alt="feature.title" class="w-12 h-12 mr-4 flex-shrink-0" />
           <div>
-            <h3 class="text-xl font-semibold text-blue-900 mb-2">{{ feature.title }}</h3>
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">{{ feature.title }}</h3>
             <p class="text-gray-600">{{ feature.description }}</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="bg-white py-16">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+          <img
+            src="@/assets/icons/team-up.jpg"
+            alt="Resume Maker Illustration"
+            class="w-full h-auto"
+          />
+        </div>
+        <div class="md:w-1/2 md:pl-12">
+          <h2 class="text-4xl font-bold mb-6 text-gray-800">
+            Use the best resume maker as your guide
+          </h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Getting that dream job can seem like an impossible task. We're here to change that. Give
+            yourself a real advantage with the best online resume maker: created by experts,
+            improved by data, trusted by millions of professionals.
+          </p>
+          <div class="flex items-center">
+            <button
+              class="bg-blue-500 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-blue-600 mr-4"
+            >
+              Create my resume
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="text-left">
+          <img
+            src="@/assets/icons/easy-builder.png"
+            alt="Win Interviews"
+            class="w-16 h-16 mb-4 text-left"
+          />
+          <h3 class="text-xl font-bold mb-4 text-gray-800">Make a resume that wins interviews</h3>
+          <p class="text-gray-600">
+            Use our resume maker with its advanced creation tools to tell a professional story that
+            engages recruiters, hiring managers and even CEOs.
+          </p>
+        </div>
+        <div class="text-left">
+          <img
+            src="@/assets/icons/easy-builder.png"
+            alt="Easy Writing"
+            class="w-16 h-16 mb-4 text-left"
+          />
+          <h3 class="text-xl font-bold mb-4 text-gray-800">Resume writing made easy</h3>
+          <p class="text-gray-600 text-left">
+            Resume writing has never been this effortless. Pre-generated text, visual designs and
+            more - all already integrated into the resume maker. Just fill in your details.
+          </p>
+        </div>
+        <div class="text-left">
+          <img
+            src="@/assets/icons/easy-builder.png"
+            alt="Recruiter Tested"
+            class="w-16 h-16 mb-4 text-left"
+          />
+          <h3 class="text-xl font-bold mb-4 text-gray-800 text-left">
+            A recruiter-tested CV maker tool
+          </h3>
+          <p class="text-gray-600 text-left">
+            Our resume builder and its pre-generated content are tested by recruiters and IT
+            experts. We help your resume become truly competitive in the hiring process.
+          </p>
         </div>
       </div>
     </div>
