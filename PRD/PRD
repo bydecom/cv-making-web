@@ -1,0 +1,65 @@
+Product Requirements Document (PRD)
+1. Mục tiêu sản phẩm
+Xây dựng một trang web cho phép người dùng tải lên các file ảnh hoặc PDF, sau đó sử dụng công nghệ OCR để trích xuất toàn bộ văn bản từ các file này. Trang web sẽ hiển thị kết quả trực tiếp cho người dùng, dễ dàng sử dụng và hỗ trợ nhiều định dạng tệp.
+
+2. Phạm vi sản phẩm
+Trang web này sẽ bao gồm các tính năng chính sau:
+
+Tải lên file (ảnh hoặc PDF).
+Xử lý và trích xuất chữ từ ảnh bằng công nghệ OCR.
+Trích xuất văn bản từ file PDF.
+Hiển thị kết quả trích xuất văn bản cho người dùng.
+3. Các tính năng chính
+3.1 Tải lên file
+Người dùng có thể tải lên một file ảnh hoặc PDF thông qua một trường input.
+Hỗ trợ các định dạng ảnh phổ biến như .jpg, .png, .jpeg.
+Hỗ trợ các file PDF chuẩn.
+3.2 Xử lý ảnh với OCR
+Khi người dùng tải lên một file ảnh, hệ thống sẽ sử dụng Tesseract.js để trích xuất văn bản từ ảnh.
+Hệ thống sẽ hiển thị tiến độ trích xuất văn bản cho người dùng thông qua thanh tiến trình hoặc tin nhắn trạng thái.
+3.3 Xử lý file PDF
+Nếu file là PDF, hệ thống sẽ đọc nội dung của PDF và trích xuất tất cả các văn bản.
+Hiển thị văn bản từ tất cả các trang PDF một cách trực quan.
+3.4 Hiển thị kết quả
+Kết quả văn bản sau khi trích xuất sẽ được hiển thị trong một vùng văn bản bên dưới nút tải lên.
+Người dùng có thể sao chép văn bản hoặc tải xuống dưới dạng file .txt.
+3.5 Hỗ trợ nhiều ngôn ngữ
+Tesseract.js hỗ trợ nhiều ngôn ngữ khác nhau cho quá trình OCR (ví dụ: tiếng Anh, tiếng Việt), người dùng có thể chọn ngôn ngữ trước khi tải lên.
+4. Chi tiết kỹ thuật
+4.1 Kiến trúc tổng quan
+Frontend: Sử dụng Vue.js để phát triển giao diện người dùng.
+OCR Engine: Sử dụng tesseract.js để xử lý ảnh và pdf-lib hoặc pdf.js để xử lý file PDF.
+Deploy: Triển khai trang web lên một nền tảng như Vercel hoặc Netlify.
+4.2 Framework & Công cụ
+Vue.js: Frontend framework chính để phát triển giao diện người dùng.
+Tesseract.js: Thư viện JavaScript để thực hiện OCR trên ảnh.
+PDF-lib hoặc PDF.js: Thư viện để đọc và trích xuất văn bản từ file PDF.
+HTML5 FileReader API: Để xử lý và đọc file từ input của người dùng.
+4.3 Yêu cầu hiệu suất
+Ứng dụng phải xử lý ảnh trong vòng 10-15 giây (tùy vào kích thước file).
+Với file PDF, hệ thống cần trích xuất văn bản từ các trang trong thời gian hợp lý (tối đa 30 giây cho mỗi file PDF dưới 5MB).
+5. Mockup giao diện người dùng
+Trang chính:
+
+Tên trang web (Header)
+Hộp input để tải lên file (ảnh hoặc PDF)
+Dropdown để chọn ngôn ngữ OCR
+Nút “Extract Text”
+Vùng hiển thị kết quả trích xuất văn bản
+Thanh tiến trình:
+
+Hiển thị tiến độ khi đang trích xuất chữ từ file (loading).
+6. Kế hoạch triển khai
+6.1 Giai đoạn 1: Thiết kế và phát triển
+Thời gian: 1-2 tuần.
+Mô tả: Xây dựng giao diện người dùng bằng Vue.js, tích hợp Tesseract.js và PDF-lib để xử lý các file ảnh và PDF.
+6.2 Giai đoạn 2: Testing và tối ưu hóa
+Thời gian: 1 tuần.
+Mô tả: Test với nhiều loại file và kích thước khác nhau, kiểm tra độ chính xác của việc trích xuất chữ từ các ngôn ngữ khác nhau.
+6.3 Giai đoạn 3: Triển khai
+Thời gian: 1-2 ngày.
+Mô tả: Triển khai ứng dụng lên nền tảng cloud (Vercel/Netlify).
+7. Các yêu cầu khác
+Hỗ trợ đa nền tảng (desktop, tablet, mobile).
+Responsive design để đảm bảo trải nghiệm người dùng tốt trên các thiết bị khác nhau.
+Hỗ trợ ngôn ngữ chính là tiếng Việt và tiếng Anh.
