@@ -1,4 +1,5 @@
 <template>
+  <!-- Hero Section -->
   <div class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-16 text-center relative">
       <h2 class="text-blue-900 text-base font-semibold mb-4">ONLINE RESUME BUILDER</h2>
@@ -68,9 +69,9 @@
     </div>
   </div>
 
-  <!-- Divider line -->
+  <!-- Divider line between section 2 and section 3 -->
   <hr class="border-t border-gray-200 mx-auto" />
-
+  <!-- Section 3 -->
   <div class="bg-gray-100 py-16">
     <div class="container mx-auto px-4 max-w-6xl">
       <h2 class="text-4xl font-bold mb-16 text-gray-800 text-center">
@@ -81,15 +82,16 @@
         <div v-for="feature in features" :key="feature.title" class="flex items-start">
           <img :src="feature.icon" :alt="feature.title" class="w-12 h-12 mr-4 flex-shrink-0" />
           <div>
-            <h3 class="text-xl font-semibold text-blue-600 mb-2">{{ feature.title }}</h3>
+            <h3 class="text-xl font-semibold text-blue-00 mb-2">{{ feature.title }}</h3>
             <p class="text-gray-600">{{ feature.description }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Section 3 -->
+  <!-- Divider line between section 3 and section 4 -->
+  <hr class="border-t border-gray-200 mx-auto" />
+  <!-- Section 4 -->
   <div class="bg-white py-16">
     <div class="container mx-auto px-4 max-w-6xl">
       <div class="flex flex-col md:flex-row items-center">
@@ -119,7 +121,6 @@
         </div>
       </div>
     </div>
-
     <div class="container mx-auto px-4 max-w-6xl">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
         <div class="text-left">
@@ -159,6 +160,47 @@
             Our resume builder and its pre-generated content are tested by recruiters and IT
             experts. We help your resume become truly competitive in the hiring process.
           </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="bg-indigo-800 py-16 text-white">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+          <h2 class="text-4xl font-bold mb-6">Beautiful ready-to-use resume templates</h2>
+          <p class="text-xl mb-8">
+            Win over employers and recruiters by using one of our 25+ elegant,
+            professionally-designed resume templates. Download to PNG or PDF.
+          </p>
+          <button
+            class="bg-white text-indigo-800 px-8 py-3 rounded-md text-lg font-semibold hover:bg-indigo-100 transition duration-300"
+          >
+            Select template
+          </button>
+          <div class="mt-8 flex items-center">
+            <div class="text-3xl text-green-400 mr-4">★★★★★</div>
+            <div>
+              <div class="text-xl font-bold">4.9 out of 5</div>
+              <div class="text-sm">based on 51,569 reviews of Community</div>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 relative">
+          <div class="flex justify-end">
+            <img
+              src="@/assets/cv-sample.jpg"
+              alt="Resume Template 1"
+              class="w-3/4 h-auto object-cover shadow-lg rounded-md z-10 relative"
+            />
+            <img
+              src="@/assets/cv-sample.jpg"
+              alt="Resume Template 2"
+              class="w-3/4 h-auto object-cover shadow-lg rounded-md absolute top-8 right-16"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -307,5 +349,11 @@ const features = [
   opacity: 1;
 }
 
-/* ... other styles ... */
+.bg-indigo-800 {
+  background-color: #3730a3;
+}
+
+.text-green-400 {
+  color: #4ade80;
+}
 </style>
