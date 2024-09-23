@@ -2,9 +2,11 @@
   <!-- Hero Section -->
   <div class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-16 text-center relative">
-      <h2 class="text-blue-900 text-base font-semibold mb-4 mb mt-16">ONLINE RESUME BUILDER</h2>
+      <h2 class="text-blue-900 text-base font-semibold mb-4 mb mt-16">
+        ONLINE CURRICULUM VITAE BUILDER
+      </h2>
       <h1 class="text-5xl font-bold text-gray-800 mb-6">
-        Only 2% of resumes make it past<br />
+        Only 2% of <span class="text-blue-600">CVs</span> make it past<br />
         the first round. Be in the top 2%
       </h1>
       <p class="text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -15,7 +17,7 @@
       >
         Create my resume
       </button>
-      <p class="text-sm text-gray-500 mt-4">32,519 resumes created today</p>
+      <p class="text-sm text-gray-500 mt-4">30 resumes created</p>
 
       <transition appear name="slide-up">
         <div class="mt-16 flex justify-center" style="margin-bottom: -4rem">
@@ -23,7 +25,7 @@
             class="bg-white shadow-lg overflow-hidden"
             style="width: 40%; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem"
           >
-            <img src="@/assets/cv-sample1.jpg" alt="CV Sample" class="object-cover w-full h-full" />
+            <img src="@/assets/resume-01.jpg" alt="CV Sample" class="object-cover w-full h-full" />
           </div>
         </div>
       </transition>
@@ -42,7 +44,7 @@
           <div class="text-blue-600 text-4xl mb-2">★★★★★</div>
           <div class="text-3xl font-bold mb-2">4.9 out of 5</div>
           <div class="text-xl font-semibold mb-2">From Community</div>
-          <p class="text-base text-gray-600">based on 51,569 reviews</p>
+          <p class="text-base text-gray-600">based on 3,148 reviews</p>
         </div>
 
         <div class="w-full md:w-3/4 grid grid-cols-1 md:grid-cols-3 gap-6">

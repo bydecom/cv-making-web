@@ -13,7 +13,7 @@
             <span class="text-xl font-semibold text-gray-800">bestcv.io</span>
           </router-link>
           <nav class="hidden lg:flex items-center space-x-6">
-            <a class="flex items-center hover:text-gray-800" href="/resume-templates">
+            <a class="flex items-center hover:text-gray-800" href="/templates">
               Resume
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -94,9 +94,7 @@
       >
         <div v-if="isMenuOpen" class="lg:hidden">
           <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="/resume-templates" class="block text-gray-600 hover:text-gray-800 py-2"
-              >Resume</a
-            >
+            <a href="/templates" class="block text-gray-600 hover:text-gray-800 py-2">Resume</a>
             <a href="/cover-letter-templates" class="block text-gray-600 hover:text-gray-800 py-2"
               >Cover Letter</a
             >
