@@ -45,7 +45,7 @@
                 ></path>
               </svg>
             </a>
-            <a class="hover:text-gray-800" href="/blog">Blog</a>
+            <a class="hover:text-gray-800" href="/example">Example</a>
             <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer"
               >FAQ</a
             >
@@ -98,7 +98,7 @@
             <a href="/cover-letter-templates" class="block text-gray-600 hover:text-gray-800 py-2"
               >Cover Letter</a
             >
-            <a href="/blog" class="block text-gray-600 hover:text-gray-800 py-2">Blog</a>
+            <a href="/example" class="block text-gray-600 hover:text-gray-800 py-2">Example</a>
             <a href="https://help.resume.io" class="block text-gray-600 hover:text-gray-800 py-2"
               >FAQ</a
             >

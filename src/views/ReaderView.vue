@@ -10,6 +10,18 @@
             accept=".png,.jpg,.jpeg,.pdf"
             class="mb-4"
           />
+          <input
+            type="text"
+            v-model="pdfLink"
+            placeholder="Enter PDF link"
+            class="mb-4 w-full p-2 border rounded"
+          />
+          <button
+            @click="loadPdfFromLink"
+            class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+          >
+            Load PDF from Link
+          </button>
           <select v-model="selectedLanguage" class="mb-4 w-full p-2 border rounded">
             <option value="eng">English</option>
             <option value="vie">Vietnamese</option>
@@ -69,9 +81,29 @@ const selectedFile = ref(null)
 const selectedLanguage = ref('eng')
 const parsedText = ref('')
 const isLoading = ref(false)
+const pdfLink = ref('')
 
 const handleFileUpload = (event) => {
   selectedFile.value = event.target.files[0]
+}
+
+const loadPdfFromLink = async () => {
+  if (!pdfLink.value) {
+    alert('Please enter a valid PDF link.')
+    return
+  }
+  try {
+    const response = await fetch(pdfLink.value)
+    if (!response.ok) {
+      throw new Error('Failed to fetch PDF from the link.')
+    }
+    const blob = await response.blob()
+    selectedFile.value = new File([blob], 'loaded.pdf', { type: 'application/pdf' })
+    alert('PDF loaded successfully from the link.')
+  } catch (error) {
+    console.error('Error loading PDF:', error)
+    alert('Error loading PDF from the link.')
+  }
 }
 
 const parseText = async () => {
@@ -92,7 +124,10 @@ const parseText = async () => {
       },
       body: JSON.stringify({
         model: 'Meta-Llama-3.1-8B-Instruct',
-        messages: [{ role: 'user', content: extractedText.value }],
+        messages: [
+          { role: 'system', content: 'Always respone in JSON form without codeblock' },
+          { role: 'user', content: extractedText.value }
+        ],
         repetition_penalty: 1.1,
         temperature: 0.7,
         top_p: 0.9,
