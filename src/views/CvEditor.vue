@@ -4,7 +4,7 @@
     <div class="space-y-4">
       <input type="file" @change="onFileChange" accept="image/*" class="input" />
       <input v-model="cvData.firstName" placeholder="First Name" class="input" />
-      <input v-modnel="cvData.lastName" placeholder="Last Name" class="input" />
+      <input v-model="cvData.lastName" placeholder="Last Name" class="input" />
       <input v-model="cvData.jobTitle" placeholder="Job Title" class="input" />
       <input v-model="cvData.email" type="email" placeholder="Email" class="input" />
       <input v-model="cvData.phone" placeholder="Phone" class="input" />
@@ -101,15 +101,18 @@
         </div>
         <button @click="addEducation" class="button">Add Education</button>
       </div>
+
+      <button @click="exportCV" class="export-button">Export PDF</button>
+      <!-- New Export Button -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue' // Import ref here
 
 const props = defineProps(['cvData', 'updateCvData'])
-const emit = defineEmits()
+const emit = defineEmits(['update-image'])
 
 const showCertificates = ref(false)
 const showExtracurricular = ref(false)
@@ -155,78 +158,8 @@ const removeEducation = (index) => {
   props.updateCvData({ ...props.cvData, education: newEducation })
 }
 
-const toggleCertificates = () => {
-  showCertificates.value = !showCertificates.value
-  if (showCertificates.value) {
-    props.updateCvData({ ...props.cvData, certificates: [...props.cvData.certificates, ''] })
-  }
-}
-
-const toggleExtracurricular = () => {
-  showExtracurricular.value = !showExtracurricular.value
-  if (showExtracurricular.value) {
-    props.updateCvData({
-      ...props.cvData,
-      extracurricularActivities: [...props.cvData.extracurricularActivities, '']
-    })
-  }
-}
-
-const toggleProject = () => {
-  showProject.value = !showProject.value
-  if (showProject.value) {
-    props.updateCvData({ ...props.cvData, projects: [...props.cvData.projects, ''] })
-  }
-}
-
-const toggleLanguage = () => {
-  showLanguage.value = !showLanguage.value
-  if (showLanguage.value) {
-    props.updateCvData({ ...props.cvData, languages: [...props.cvData.languages, ''] })
-  }
-}
-
-const toggleReference = () => {
-  showReference.value = !showReference.value
-  if (showReference.value) {
-    props.updateCvData({ ...props.cvData, references: [...props.cvData.references, ''] })
-  }
-}
-
-// Add remove functions for each section
-const removeCertificate = (index) => {
-  const newCertificates = props.cvData.certificates.filter((_, i) => i !== index)
-  props.updateCvData({ ...props.cvData, certificates: newCertificates })
-}
-
-const removeExtracurricular = (index) => {
-  const newActivities = props.cvData.extracurricularActivities.filter((_, i) => i !== index)
-  props.updateCvData({ ...props.cvData, extracurricularActivities: newActivities })
-}
-
-const removeProject = (index) => {
-  const newProjects = props.cvData.projects.filter((_, i) => i !== index)
-  props.updateCvData({ ...props.cvData, projects: newProjects })
-}
-
-const removeLanguage = (index) => {
-  const newLanguages = props.cvData.languages.filter((_, i) => i !== index)
-  props.updateCvData({ ...props.cvData, languages: newLanguages })
-}
-
-const removeReference = (index) => {
-  const newReferences = props.cvData.references.filter((_, i) => i !== index)
-  props.updateCvData({ ...props.cvData, references: newReferences })
-}
-
-const addReference = () => {
-  if (newReference.value.trim() !== '') {
-    props.updateCvData({
-      ...props.cvData,
-      references: [...props.cvData.references, newReference.value.trim()]
-    })
-    newReference.value = ''
-  }
+const exportCV = () => {
+  emit('export-cv') // Emit event to trigger export in CvPreview
 }
 
 const onFileChange = (event) => {
@@ -243,7 +176,7 @@ const onFileChange = (event) => {
 
 <style scoped>
 .editor-container {
-  height: 600px; /* Đặt chiều cao cố định cho khung */
+  max-height: 1000px; /* Đặt chiều cao cố định cho khung */
 }
 
 .input {
