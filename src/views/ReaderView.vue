@@ -119,7 +119,7 @@ const parseText = async () => {
     const response = await fetch('https://api.arliai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_ARLIAI_API_KEY}`,
+        Authorization: `Bearer ${'dcd59e84-22a1-4cf5-ba76-a6ef9b88634d'}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
