@@ -23,7 +23,7 @@
             </p>
             <p class="mb-0.5">Date of Birth: {{ cvData.dateOfBirth }}</p>
             <p class="mb-0.5">Sex: {{ cvData.sex }}</p>
-            <p>Locate: {{ cvData.locate }}</p>
+            <p>Locate: {{ cvData.location }}</p>
           </div>
         </div>
         <!-- Right Column -->

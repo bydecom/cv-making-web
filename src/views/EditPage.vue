@@ -11,11 +11,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import CvEditor from './CvEditor.vue'
 import CvPreview from './CvPreview.vue'
 
-const cvData = ref({
+const route = useRoute()
+const router = useRouter()
+const imageData = ref('')
+const cvPreview = ref(null)
+
+// Template data mẫu
+const templateData = {
   firstName: 'John',
   lastName: 'Doe',
   jobTitle: 'Software Developer',
@@ -46,23 +53,74 @@ const cvData = ref({
       year: '2015'
     }
   ]
+}
+
+// Hàm format data để đảm bảo cấu trúc đúng
+const formatCvData = (data) => {
+  return {
+    firstName: data.firstName || '',
+    lastName: data.lastName || '',
+    jobTitle: data.jobTitle || '',
+    email: data.email || '',
+    phone: data.phone || '',
+    location: data.location || '',
+    summary: data.summary || '',
+    skills: Array.isArray(data.skills) ? data.skills : [],
+    experience: Array.isArray(data.experience)
+      ? data.experience.map((exp) => ({
+          title: exp.title || '',
+          company: exp.company || '',
+          period: exp.period || '',
+          description: exp.description || ''
+        }))
+      : [],
+    education: Array.isArray(data.education)
+      ? data.education.map((edu) => ({
+          degree: edu.degree || '',
+          school: edu.school || '',
+          year: edu.year || ''
+        }))
+      : []
+  }
+}
+
+// Khởi tạo cvData với giá trị mặc định
+const cvData = ref(formatCvData(templateData))
+
+// Hàm giải mã dữ liệu từ URL
+const decodeCvData = (dataString) => {
+  try {
+    const decoded = JSON.parse(decodeURIComponent(dataString))
+    return formatCvData(decoded) // Format data để đảm bảo cấu trúc đúng
+  } catch (error) {
+    console.error('Error decoding CV data:', error)
+    return formatCvData({}) // Trả về object rỗng đã format nếu có lỗi
+  }
+}
+
+// Khởi tạo dữ liệu khi component được mount
+onMounted(() => {
+  // Kiểm tra xem có data từ URL không
+  if (route.params.data) {
+    const urlData = decodeCvData(route.params.data)
+    cvData.value = urlData
+  } else {
+    // Nếu không có data từ URL, sử dụng template
+    cvData.value = formatCvData(templateData)
+  }
 })
 
-const imageData = ref('') // New ref to hold the image data
-const cvPreview = ref(null) // Declare the ref for CvPreview
-
 const updateCvData = (newData) => {
-  cvData.value = newData
+  cvData.value = formatCvData(newData)
 }
 
 const handleImageUpdate = (newImage) => {
-  imageData.value = newImage // Update imageData with the new image
+  imageData.value = newImage
 }
 
 const exportCV = () => {
-  console.log(cvPreview.value) // Check if cvPreview is set
   if (cvPreview.value && typeof cvPreview.value.exportCv === 'function') {
-    cvPreview.value.exportCv() // Call the export function in CvPreview
+    cvPreview.value.exportCv()
   } else {
     console.error('CvPreview reference is not set or exportCv is not a function.')
   }
@@ -71,7 +129,7 @@ const exportCV = () => {
 
 <style scoped>
 .flex {
-  display: 100%;
+  display: flex;
 }
 .h-screen {
   height: 150vh;
