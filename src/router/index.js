@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { requireAuth } from './guards'
 import HomeView from '../views/HomeView.vue'
 import ExampleView from '../views/ExampleView.vue'
 import ReaderView from '../views/ReaderView.vue'
@@ -47,17 +46,22 @@ const router = createRouter({
     {
       path: '/convert',
       name: 'convert',
-      component: () => import('../views/ConvertPage.vue')
+      component: ConvertPage
     },
     {
       path: '/edit/:data?',
       name: 'edit-cv',
-      component: () => import('../views/EditPage.vue')
+      component: () => EditPage
     },
     {
       path: '/about',
       name: 'about',
       component: AboutView
+    },
+    {
+      path: '/reader',
+      name: 'reader',
+      component: ReaderView
     }
   ]
 })

@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-100 py-24">
-    <div class="max-w-5xl mx-auto px-4 py-4">
+    <div class="max-w-5xl mx-auto px-4">
       <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
         <!-- Header Section -->
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 py-6 px-8">
@@ -10,7 +10,52 @@
           </p>
         </div>
 
-        <div class="p-8">
+        <div class="p-2">
+          <!-- CV Upload Section -->
+          <div class="mb-4 mt-4 p-2 border-2 border-dashed border-gray-300 rounded-lg">
+            <div class="flex justify-between items-center">
+              <label class="block text-gray-700 text-lg font-semibold">
+                Upload Your CV
+                <span class="text-gray-500 text-sm font-normal">(optional)</span>
+              </label>
+              <div class="flex items-center space-x-2">
+                <input
+                  type="file"
+                  @change="handleFileUpload"
+                  accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                  class="hidden"
+                  ref="fileInput"
+                />
+                <button
+                  @click="$refs.fileInput.click()"
+                  class="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition"
+                  :disabled="isLoading"
+                >
+                  {{ isLoading ? 'Processing...' : 'Choose File' }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Loading indicator -->
+            <div v-if="isLoading" class="mt-4 flex items-center justify-center">
+              <div
+                class="animate-spin rounded-full h-8 w-8 border-2 border-blue-500 border-t-transparent"
+              ></div>
+              <span class="ml-2 text-gray-600">Processing file...</span>
+            </div>
+
+            <!-- CV Preview -->
+            <div v-if="cvContent" class="mt-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-600">CV Content Extracted:</span>
+                <button @click="clearCV" class="text-red-500 hover:text-red-600">Clear</button>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-700 max-h-40 overflow-y-auto">
+                {{ cvContent }}
+              </div>
+            </div>
+          </div>
+
           <!-- Input Section -->
           <div class="grid gap-8 md:grid-cols-2">
             <!-- Job Description Input -->
@@ -20,22 +65,40 @@
                   Job Information
                   <span class="text-red-500">*</span>
                 </label>
-                <button @click="fillJobDescription" class="ml-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-blue-600 hover:text-blue-700"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                </button>
+                <div class="flex space-x-2">
+                  <button @click="showJDModal = true" class="ml-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-blue-600 hover:text-blue-700"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
+                    </svg>
+                  </button>
+                  <button @click="fillJobDescription" class="ml-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-blue-600 hover:text-blue-700"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
               <textarea
                 v-model="jobDescription"
@@ -86,7 +149,7 @@
           </div>
 
           <!-- Generate Button -->
-          <div class="mt-8 flex justify-center">
+          <div class="mt-4 mb-4 flex justify-center">
             <button
               @click="generateEmail"
               class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition duration-300 min-w-[200px] flex items-center justify-center space-x-2"
@@ -201,10 +264,113 @@
       </div>
     </div>
   </div>
+
+  <!-- Add JD Import Modal -->
+  <div
+    v-if="showJDModal"
+    class="fixed inset-0 z-50 overflow-y-auto"
+    aria-labelledby="modal-title"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20">
+      <div
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        @click="showJDModal = false"
+      ></div>
+
+      <div class="relative bg-white rounded-lg w-full max-w-2xl p-6">
+        <div class="absolute top-4 right-4">
+          <button @click="showJDModal = false" class="text-gray-400 hover:text-gray-500">
+            <span class="sr-only">Close</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Import Job Description</h3>
+
+        <!-- Tab Navigation -->
+        <div class="border-b border-gray-200 mb-4">
+          <nav class="flex space-x-4" aria-label="Tabs">
+            <button
+              v-for="tab in ['URL', 'File']"
+              :key="tab"
+              @click="activeTab = tab"
+              :class="[
+                activeTab === tab
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm'
+              ]"
+            >
+              {{ tab }}
+            </button>
+          </nav>
+        </div>
+
+        <!-- URL Input -->
+        <div v-if="activeTab === 'URL'" class="space-y-4">
+          <input
+            v-model="jobUrl"
+            type="url"
+            placeholder="Enter PDF URL here (must end with .pdf)"
+            class="w-full p-2 border rounded-lg"
+          />
+          <button
+            @click="extractFromUrl"
+            :disabled="isProcessing || !jobUrl"
+            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          >
+            {{ isProcessing ? 'Processing...' : 'Extract PDF Content' }}
+          </button>
+        </div>
+
+        <!-- File Upload -->
+        <div v-else class="space-y-4">
+          <div class="border-2 border-dashed border-gray-300 rounded-lg p-4">
+            <input
+              type="file"
+              @change="handleJDFileUpload"
+              accept=".pdf,.png,.jpg,.jpeg"
+              class="hidden"
+              ref="jdFileInput"
+            />
+            <button
+              @click="$refs.jdFileInput.click()"
+              class="w-full py-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+            >
+              Choose File
+            </button>
+          </div>
+        </div>
+
+        <!-- Processing Status -->
+        <div v-if="isProcessing" class="mt-4">
+          <div class="flex items-center justify-center space-x-2">
+            <div
+              class="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"
+            ></div>
+            <span class="text-sm text-gray-600">Processing...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { createWorker } from 'tesseract.js'
+import * as pdfjsLib from 'pdfjs-dist'
+import 'pdfjs-dist/build/pdf.worker.mjs'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 
 const jobDescription = ref('')
 const sampleEmail = ref('')
@@ -212,6 +378,15 @@ const generatedEmail = ref('')
 const isLoading = ref(false)
 const showModal = ref(false)
 const editableEmail = ref('')
+const cvContent = ref('')
+const fileInput = ref(null)
+const showJDModal = ref(false)
+const activeTab = ref('URL')
+const jobUrl = ref('')
+const isProcessing = ref(false)
+const jdFileInput = ref(null)
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
 // Function to fill job description with sample text
 const fillJobDescription = () => {
@@ -242,6 +417,129 @@ const copyToClipboard = async (text) => {
   }
 }
 
+// Function to extract text using OCR
+const extractTextFromImage = async (file) => {
+  const worker = await createWorker()
+  try {
+    await worker.loadLanguage('eng')
+    await worker.initialize('eng')
+
+    // Convert file to base64
+    const base64Image = await new Promise((resolve) => {
+      const reader = new FileReader()
+      reader.onload = (e) => resolve(e.target.result)
+      reader.readAsDataURL(file)
+    })
+
+    const {
+      data: { text }
+    } = await worker.recognize(base64Image)
+    await worker.terminate()
+    return text
+  } catch (error) {
+    console.error('OCR Error:', error)
+    await worker.terminate()
+    throw error
+  }
+}
+
+// Function to extract text from PDF
+const extractTextFromPDF = async (file) => {
+  try {
+    const arrayBuffer = await file.arrayBuffer()
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
+    let fullText = ''
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i)
+
+      // Try to get text content first
+      try {
+        const textContent = await page.getTextContent()
+        const pageText = textContent.items.map((item) => item.str).join(' ')
+        if (pageText.trim()) {
+          fullText += pageText + '\n'
+          continue
+        }
+      } catch (e) {
+        console.warn('Failed to extract text directly, falling back to OCR', e)
+      }
+
+      // If text extraction fails or returns empty, try OCR
+      try {
+        const scale = 1.5
+        const viewport = page.getViewport({ scale })
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+        canvas.height = viewport.height
+        canvas.width = viewport.width
+
+        await page.render({
+          canvasContext: context,
+          viewport: viewport
+        }).promise
+
+        // Convert canvas to blob
+        const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'))
+        const ocrText = await extractTextFromImage(blob)
+        fullText += ocrText + '\n'
+      } catch (e) {
+        console.error('OCR fallback failed:', e)
+      }
+    }
+
+    return fullText.trim()
+  } catch (error) {
+    console.error('PDF processing error:', error)
+    throw error
+  }
+}
+
+// Thêm hàm clearCV mới
+const clearCV = () => {
+  cvContent.value = ''
+  if (fileInput.value) {
+    fileInput.value.value = '' // Reset input file
+  }
+}
+
+// Handle file upload
+const handleFileUpload = async (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  isLoading.value = true
+  try {
+    let text = ''
+    const fileType = file.type.toLowerCase()
+
+    if (fileType === 'application/pdf') {
+      text = await extractTextFromPDF(file)
+    } else if (fileType.startsWith('image/')) {
+      text = await extractTextFromImage(file)
+    } else {
+      // For other file types
+      const reader = new FileReader()
+      text = await new Promise((resolve) => {
+        reader.onload = (e) => resolve(e.target.result)
+        reader.readAsText(file)
+      })
+    }
+
+    if (!text.trim()) {
+      throw new Error('No text could be extracted from the file')
+    }
+
+    cvContent.value = text
+  } catch (error) {
+    console.error('Error processing file:', error)
+    alert('Error reading file. Please try again.')
+    clearCV()
+  } finally {
+    isLoading.value = false
+  }
+}
+
 const generateEmail = async () => {
   if (!jobDescription.value) {
     alert('Please enter job description')
@@ -252,37 +550,25 @@ const generateEmail = async () => {
   generatedEmail.value = ''
 
   try {
-    const response = await fetch('https://api.arliai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_ARLIAI_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'Meta-Llama-3.1-8B-Instruct',
-        messages: [
-          {
-            role: 'system',
-            content: import.meta.env.VITE_APP_EMAIL_PROMPT
-          },
-          {
-            role: 'user',
-            content: `Job information: ${jobDescription.value}\n${sampleEmail.value ? `Sample email reference: ${sampleEmail.value}` : ''}`
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 1024,
-        stream: false
-      })
-    })
+    const prompt =
+      import.meta.env.VITE_APP_EMAIL_PROMPT +
+      `Create a professional job application email based on the following information:
+    
+    Job information: ${jobDescription.value}
+    ${sampleEmail.value ? `Sample email reference: ${sampleEmail.value}` : ''}
+    ${cvContent.value ? `CV Content: ${cvContent.value}` : ''}
+    
+    Please write a professional and engaging cover letter email that highlights relevant qualifications and shows enthusiasm for the position."`
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+    const result = await model.generateContent(prompt)
+    const emailContent = result.response.text()
+
+    if (!emailContent) {
+      throw new Error('Failed to generate email content')
     }
 
-    const data = await response.json()
-    generatedEmail.value = data.choices[0].message.content
-    editableEmail.value = data.choices[0].message.content
+    generatedEmail.value = emailContent
+    editableEmail.value = emailContent
     showModal.value = true
   } catch (error) {
     console.error('Error:', error)
@@ -295,6 +581,98 @@ const generateEmail = async () => {
 const saveEditedEmail = () => {
   generatedEmail.value = editableEmail.value
   showModal.value = false
+}
+
+// Function to handle JD file upload
+const handleJDFileUpload = async (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  isProcessing.value = true
+  try {
+    let text = ''
+    const fileType = file.type.toLowerCase()
+
+    if (fileType === 'application/pdf') {
+      text = await extractTextFromPDF(file)
+    } else if (fileType.startsWith('image/')) {
+      text = await extractTextFromImage(file)
+    }
+
+    if (!text.trim()) {
+      throw new Error('No text could be extracted from the file')
+    }
+
+    await processJobDescription(text)
+  } catch (error) {
+    console.error('Error processing file:', error)
+    alert('Error reading file. Please try again.')
+  } finally {
+    isProcessing.value = false
+    showJDModal.value = false
+  }
+}
+
+// Function to process extracted text using AI
+const processJobDescription = async (text) => {
+  try {
+    const prompt = `Extract and format job description information from the following text. Return in format:
+    Company Name: [name]
+    Job Requirements: [list]
+    Job Description: [text]
+    
+    Text to process:
+    ${text}`
+
+    const result = await model.generateContent(prompt)
+    const processedText = result.response.text()
+
+    if (!processedText) {
+      throw new Error('Failed to process job description')
+    }
+
+    jobDescription.value = processedText
+  } catch (error) {
+    console.error('Error processing job description:', error)
+    // Still use the raw text if AI processing fails
+    jobDescription.value = text
+  }
+}
+
+const extractFromUrl = async () => {
+  if (!jobUrl.value) {
+    alert('Please enter a valid PDF link.')
+    return
+  }
+
+  isProcessing.value = true
+  try {
+    // Fetch PDF directly from URL like ReaderView
+    const response = await fetch(jobUrl.value)
+    if (!response.ok) {
+      throw new Error('Failed to fetch PDF from the link.')
+    }
+
+    // Convert response to blob and create File object
+    const blob = await response.blob()
+    const file = new File([blob], 'loaded.pdf', { type: 'application/pdf' })
+
+    // Extract text from PDF using existing function
+    const text = await extractTextFromPDF(file)
+
+    if (!text.trim()) {
+      throw new Error('No text could be extracted from the file')
+    }
+
+    // Process the extracted text
+    await processJobDescription(text)
+  } catch (error) {
+    console.error('Error loading PDF:', error)
+    alert('Error loading PDF from the link.')
+  } finally {
+    isProcessing.value = false
+    showJDModal.value = false
+  }
 }
 </script>
 

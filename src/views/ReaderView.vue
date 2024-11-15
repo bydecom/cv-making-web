@@ -75,6 +75,7 @@ import { ref } from 'vue'
 import { createWorker } from 'tesseract.js'
 import * as pdfjsLib from 'pdfjs-dist'
 import 'pdfjs-dist/build/pdf.worker.mjs'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 
 const extractedText = ref('')
 const selectedFile = ref(null)
@@ -82,6 +83,8 @@ const selectedLanguage = ref('eng')
 const parsedText = ref('')
 const isLoading = ref(false)
 const pdfLink = ref('')
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
 const handleFileUpload = (event) => {
   selectedFile.value = event.target.files[0]
@@ -113,36 +116,12 @@ const parseText = async () => {
   }
 
   isLoading.value = true
-  parsedText.value = ''
-
   try {
-    const response = await fetch('https://api.arliai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${'dcd59e84-22a1-4cf5-ba76-a6ef9b88634d'}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'Meta-Llama-3.1-8B-Instruct',
-        messages: [
-          { role: 'system', content: 'Always respone in JSON form without codeblock' },
-          { role: 'user', content: extractedText.value }
-        ],
-        repetition_penalty: 1.1,
-        temperature: 0.7,
-        top_p: 0.9,
-        top_k: 40,
-        max_tokens: 1024,
-        stream: false // Đặt là false để nhận toàn bộ phản hồi cùng một lúc
-      })
-    })
+    const prompt = `Parse and structure the following text in JSON format (without any comment or code block):
+    ${extractedText.value}`
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const data = await response.json()
-    parsedText.value = data.choices[0].message.content
+    const result = await model.generateContent(prompt)
+    parsedText.value = result.response.text()
   } catch (error) {
     console.error('Error:', error)
     parsedText.value = 'An error occurred during text parsing.'
