@@ -21,7 +21,7 @@
             </router-link>
             <router-link to="/convert" class="hover:text-gray-800">Convert CV</router-link>
             <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer">
-              CV Interview
+              CV Review
             </a>
             <div class="w-px h-6 bg-gray-300 mx-2"></div>
             <router-link
@@ -81,13 +81,13 @@
               rel="noopener noreferrer"
               class="block text-gray-600 hover:text-gray-800 py-2"
             >
-              CV Interview
+              CV Review
             </a>
             <router-link
               to="/about"
               class="block bg-white text-blue-500 font-semibold px-4 py-2 rounded-md border border-blue-500 hover:bg-blue-50 transition duration-300 mt-2"
             >
-              My Account
+              About Us
             </router-link>
           </div>
         </div>

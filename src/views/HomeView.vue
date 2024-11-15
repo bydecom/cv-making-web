@@ -1,6 +1,6 @@
 <template>
   <!-- Hero Section -->
-  <div class="bg-gray-100 min-h-screen">
+  <div class="bg-gray-100">
     <div class="container mx-auto px-4 py-16 text-center relative">
       <h2 class="text-blue-900 text-base font-semibold mb-4 mb mt-16">
         ONLINE CURRICULUM VITAE BUILDER
