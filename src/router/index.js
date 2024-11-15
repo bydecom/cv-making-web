@@ -8,6 +8,7 @@ import EditPage from '../views/EditPage.vue'
 import LoginView from '@/views/LoginView.vue'
 import EmailEditor from '@/views/EmailEditor.vue'
 import ConvertPage from '../views/ConvertPage.vue'
+import AboutView from '@/views/AboutView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,11 @@ const router = createRouter({
       path: '/edit/:data?',
       name: 'edit-cv',
       component: () => import('../views/EditPage.vue')
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: AboutView
     }
   ]
 })

@@ -13,60 +13,23 @@
             <span class="text-xl font-semibold text-gray-800">bestcv.io</span>
           </router-link>
           <nav class="hidden lg:flex items-center space-x-6">
-            <a class="flex items-center hover:text-gray-800" href="/templates"> Resume </a>
-            <a class="flex items-center hover:text-gray-800" href="/emaileditor"> Cover Letter </a>
-            <a class="hover:text-gray-800" href="/convert">Convert CV</a>
-            <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer"
-              >CV Interview</a
-            >
+            <router-link to="/templates" class="flex items-center hover:text-gray-800">
+              Resume
+            </router-link>
+            <router-link to="/emaileditor" class="flex items-center hover:text-gray-800">
+              Cover Letter
+            </router-link>
+            <router-link to="/convert" class="hover:text-gray-800">Convert CV</router-link>
+            <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer">
+              CV Interview
+            </a>
             <div class="w-px h-6 bg-gray-300 mx-2"></div>
-            <div>
-              <router-link
-                v-if="!authStore.isLoggedIn"
-                to="/login"
-                class="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300"
-              >
-                Login
-              </router-link>
-              <div v-else class="relative">
-                <button
-                  @click="toggleUserMenu"
-                  class="bg-white text-blue-500 font-semibold px-6 py-2 rounded-md border border-blue-500 hover:bg-blue-50 transition duration-300 flex items-center"
-                >
-                  <span>My Account</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4 ml-2"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </button>
-
-                <div
-                  v-if="showUserMenu"
-                  class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
-                >
-                  <router-link
-                    to="/profile"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Profile
-                  </router-link>
-                  <button
-                    @click="handleLogout"
-                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </div>
-            </div>
+            <router-link
+              to="/about"
+              class="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+            >
+              About Us
+            </router-link>
           </nav>
           <div class="lg:hidden">
             <button
@@ -103,20 +66,29 @@
       >
         <div v-if="isMenuOpen" class="lg:hidden">
           <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="/templates" class="block text-gray-600 hover:text-gray-800 py-2">Resume</a>
-            <a href="/emaileditor" class="block text-gray-600 hover:text-gray-800 py-2"
-              >Cover Letter</a
-            >
-            <a href="/example" class="block text-gray-600 hover:text-gray-800 py-2">Example</a>
-            <a href="https://help.resume.io" class="block text-gray-600 hover:text-gray-800 py-2"
-              >FAQ</a
-            >
+            <router-link to="/templates" class="block text-gray-600 hover:text-gray-800 py-2">
+              Resume
+            </router-link>
+            <router-link to="/emaileditor" class="block text-gray-600 hover:text-gray-800 py-2">
+              Cover Letter
+            </router-link>
+            <router-link to="/convert" class="block text-gray-600 hover:text-gray-800 py-2">
+              Convert CV
+            </router-link>
             <a
-              href="/app"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block text-gray-600 hover:text-gray-800 py-2"
+            >
+              CV Interview
+            </a>
+            <router-link
+              to="/about"
               class="block bg-white text-blue-500 font-semibold px-4 py-2 rounded-md border border-blue-500 hover:bg-blue-50 transition duration-300 mt-2"
             >
               My Account
-            </a>
+            </router-link>
           </div>
         </div>
       </transition>
