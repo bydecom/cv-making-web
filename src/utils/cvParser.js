@@ -346,3 +346,7 @@ const extractedText = `Your CV text here...` // Replace with your actual text or
 //     throw new Error('Failed to parse CV data: ' + error.message)
 //   }
 // }
+
+export const someFunction = (router) => {
+  // Sử dụng router ở đây
+}
