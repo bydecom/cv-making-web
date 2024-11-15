@@ -16,16 +16,17 @@
             <router-link to="/templates" class="flex items-center hover:text-gray-800">
               Resume
             </router-link>
+            <router-link to="/convert" class="hover:text-gray-800">Convert CV</router-link>
+            <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer">
+              CV Review
+            </a>
             <router-link to="/emaileditor" class="flex items-center hover:text-gray-800">
               Cover Letter
             </router-link>
             <router-link to="/enhancemail" class="flex items-center hover:text-gray-800">
               Enhance Letter
             </router-link>
-            <router-link to="/convert" class="hover:text-gray-800">Convert CV</router-link>
-            <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer">
-              CV Review
-            </a>
+
             <div class="w-px h-6 bg-gray-300 mx-2"></div>
             <router-link
               to="/about"
@@ -72,12 +73,6 @@
             <router-link to="/templates" class="block text-gray-600 hover:text-gray-800 py-2">
               Resume
             </router-link>
-            <router-link to="/emaileditor" class="block text-gray-600 hover:text-gray-800 py-2">
-              Cover Letter
-            </router-link>
-            <router-link to="/enhancemail" class="block text-gray-600 hover:text-gray-800 py-2">
-              Enhance Letter
-            </router-link>
             <router-link to="/convert" class="block text-gray-600 hover:text-gray-800 py-2">
               Convert CV
             </router-link>
@@ -89,6 +84,13 @@
             >
               CV Review
             </a>
+            <router-link to="/emaileditor" class="block text-gray-600 hover:text-gray-800 py-2">
+              Cover Letter
+            </router-link>
+            <router-link to="/enhancemail" class="block text-gray-600 hover:text-gray-800 py-2">
+              Enhance Letter
+            </router-link>
+
             <router-link
               to="/about"
               class="block bg-white text-blue-500 font-semibold px-4 py-2 rounded-md border border-blue-500 hover:bg-blue-50 transition duration-300 mt-2"

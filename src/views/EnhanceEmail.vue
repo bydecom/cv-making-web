@@ -4,9 +4,13 @@
       <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
         <!-- Header Section -->
         <div
-          class="bg-gradient-to-r from-blue-500 to-blue-600 py-6 px-8 flex justify-between items-center"
+          class="bg-gradient-to-r from-blue-500 to-blue-600 py-6 px-8""
         >
-          <h1 class="text-3xl font-bold text-white">Enhance Your Email</h1>
+          <h1 class="text-3xl font-bold text-white text-center">Enhance Your Email</h1>
+          <p class="text-white text-center mt-2">
+            Quickly improve the tone, style, and structure
+            to make your message stand out.
+          </p>
         </div>
         <div class="p-4">
           <textarea
