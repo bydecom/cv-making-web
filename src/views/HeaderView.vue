@@ -19,6 +19,9 @@
             <router-link to="/emaileditor" class="flex items-center hover:text-gray-800">
               Cover Letter
             </router-link>
+            <router-link to="/enhancemail" class="flex items-center hover:text-gray-800">
+              Enhance Letter
+            </router-link>
             <router-link to="/convert" class="hover:text-gray-800">Convert CV</router-link>
             <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer">
               CV Review
@@ -71,6 +74,9 @@
             </router-link>
             <router-link to="/emaileditor" class="block text-gray-600 hover:text-gray-800 py-2">
               Cover Letter
+            </router-link>
+            <router-link to="/enhancemail" class="block text-gray-600 hover:text-gray-800 py-2">
+              Enhance Letter
             </router-link>
             <router-link to="/convert" class="block text-gray-600 hover:text-gray-800 py-2">
               Convert CV

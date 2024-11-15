@@ -15,6 +15,8 @@ const model = genAI.getGenerativeModel({
       "dateofbirth" :string,
       "phone": string,
       "location": string,
+      "city": string,
+      "country": string,
       "summary": string,
       "skills": string[],
       "experience": [
