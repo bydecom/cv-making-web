@@ -268,6 +268,112 @@
           >
             Close
           </button>
+          <button
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            @click="copyToClipboard(editableEmail)"
+          >
+            Copy
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add JD Import Modal -->
+  <div
+    v-if="showJDModal"
+    class="fixed inset-0 z-50 overflow-y-auto"
+    aria-labelledby="modal-title"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20">
+      <div
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        @click="showJDModal = false"
+      ></div>
+
+      <div class="relative bg-white rounded-lg w-full max-w-2xl p-6">
+        <div class="absolute top-4 right-4">
+          <button @click="showJDModal = false" class="text-gray-400 hover:text-gray-500">
+            <span class="sr-only">Close</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Import Job Description</h3>
+
+        <!-- Tab Navigation -->
+        <div class="border-b border-gray-200 mb-4">
+          <nav class="flex space-x-4" aria-label="Tabs">
+            <button
+              v-for="tab in ['URL', 'File']"
+              :key="tab"
+              @click="activeTab = tab"
+              :class="[
+                activeTab === tab
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm'
+              ]"
+            >
+              {{ tab }}
+            </button>
+          </nav>
+        </div>
+
+        <!-- URL Input -->
+        <div v-if="activeTab === 'URL'" class="space-y-4">
+          <input
+            v-model="jobUrl"
+            type="url"
+            placeholder="Enter PDF URL here (must end with .pdf)"
+            class="w-full p-2 border rounded-lg"
+          />
+          <button
+            @click="extractFromUrl"
+            :disabled="isProcessing || !jobUrl"
+            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          >
+            {{ isProcessing ? 'Processing...' : 'Extract PDF Content' }}
+          </button>
+        </div>
+
+        <!-- File Upload -->
+        <div v-else class="space-y-4">
+          <div class="border-2 border-dashed border-gray-300 rounded-lg p-4">
+            <input
+              type="file"
+              @change="handleJDFileUpload"
+              accept=".pdf,.png,.jpg,.jpeg"
+              class="hidden"
+              ref="jdFileInput"
+            />
+            <button
+              @click="$refs.jdFileInput.click()"
+              class="w-full py-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+            >
+              Choose File
+            </button>
+          </div>
+        </div>
+
+        <!-- Processing Status -->
+        <div v-if="isProcessing" class="mt-4">
+          <div class="flex items-center justify-center space-x-2">
+            <div
+              class="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"
+            ></div>
+            <span class="text-sm text-gray-600">Processing...</span>
+          </div>
         </div>
       </div>
     </div>
@@ -309,11 +415,11 @@ const fillJobDescription = () => {
 // Function to fill sample email with sample text
 const fillSampleEmail = () => {
   sampleEmail.value = `Dear Hiring Manager,
-  
+
 I am writing to express my interest in the Frontend Developer position at Company ABC. With over 2 years of experience in web development, I am confident in my ability to contribute effectively to your team.
-  
+
 Thank you for considering my application. I look forward to the opportunity to discuss my qualifications further.
-  
+
 Sincerely,
 [Your Name]`
 }
@@ -465,7 +571,8 @@ const generateEmail = async () => {
       `    
     Job information: ${jobDescription.value}
     ${sampleEmail.value ? `Sample email reference: ${sampleEmail.value}` : ''}
-    ${cvContent.value ? `CV Content: ${cvContent.value}` : ''}`
+    ${cvContent.value ? `CV Content: ${cvContent.value}` : ''}
+    "`
 
     const result = await model.generateContent(prompt)
     const emailContent = result.response.text()
