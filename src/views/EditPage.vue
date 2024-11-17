@@ -91,7 +91,8 @@ const cvData = ref(formatCvData(templateData))
 const decodeCvData = (dataString) => {
   try {
     const decoded = JSON.parse(decodeURIComponent(dataString))
-    return formatCvData(decoded) // Format data để đảm bảo cấu trúc đúng
+    console.log('Decoded CV Data:', decoded) // Kiểm tra dữ liệu đã giải mã
+    return formatCvData(decoded)
   } catch (error) {
     console.error('Error decoding CV data:', error)
     return formatCvData({}) // Trả về object rỗng đã format nếu có lỗi
