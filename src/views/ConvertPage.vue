@@ -220,11 +220,20 @@ const processFile = async () => {
 }
 
 const proceedToEditor = () => {
-  const cvDataString = JSON.stringify(extractedData.value)
-  router.push({
-    name: 'edit-cv',
-    params: { data: encodeURIComponent(cvDataString) }
-  })
+  if (!extractedData.value) {
+    console.error('No extracted data available')
+    return
+  }
+
+  try {
+    const cvDataString = JSON.stringify(extractedData.value)
+    router.push({
+      name: 'edit-cv',
+      params: { data: encodeURIComponent(cvDataString) }
+    })
+  } catch (error) {
+    console.error('Error during navigation:', error)
+  }
 }
 
 const updateStepStatus = (stepId, status) => {

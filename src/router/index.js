@@ -55,6 +55,11 @@ const router = createRouter({
       component: () => EditPage
     },
     {
+      path: '/edit-cv',
+      name: 'edit-cv',
+      component: EditPage
+    },
+    {
       path: '/about',
       name: 'about',
       component: AboutView
