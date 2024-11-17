@@ -14,6 +14,11 @@
         placeholder="Professional Summary"
         class="textarea"
       ></textarea>
+      <!-- New Fields -->
+      <input v-model="cvData.sex" placeholder="Sex" class="input" />
+      <input v-model="cvData.dateOfBirth" type="date" placeholder="Date of Birth" class="input" />
+      <input v-model="cvData.city" placeholder="City" class="input" />
+      <input v-model="cvData.country" placeholder="Country" class="input" />
 
       <div>
         <h3 class="font-semibold mb-2">Skills</h3>
@@ -103,24 +108,15 @@
       </div>
 
       <button @click="exportCV" class="export-button">Export PDF</button>
-      <!-- New Export Button -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue' // Import ref here
+import { ref, defineProps, defineEmits } from 'vue'
 
 const props = defineProps(['cvData', 'updateCvData'])
 const emit = defineEmits(['update-image'])
-
-const showCertificates = ref(false)
-const showExtracurricular = ref(false)
-const showProject = ref(false)
-const showLanguage = ref(false)
-const showReference = ref(false)
-
-const newReference = ref('')
 
 const addSkill = () => {
   props.updateCvData({ ...props.cvData, skills: [...props.cvData.skills, ''] })
@@ -159,7 +155,7 @@ const removeEducation = (index) => {
 }
 
 const exportCV = () => {
-  emit('export-cv') // Emit event to trigger export in CvPreview
+  emit('export-cv')
 }
 
 const onFileChange = (event) => {
@@ -167,7 +163,7 @@ const onFileChange = (event) => {
   if (file) {
     const reader = new FileReader()
     reader.onload = (e) => {
-      emit('update-image', e.target.result) // Emit the image data
+      emit('update-image', e.target.result)
     }
     reader.readAsDataURL(file)
   }
