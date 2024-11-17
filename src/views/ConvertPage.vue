@@ -221,12 +221,13 @@ const processFile = async () => {
 
 const proceedToEditor = () => {
   if (!extractedData.value) {
-    console.error('No extracted data available')
+    console.error('No extracted data available:', extractedData.value)
     return
   }
 
   try {
     const cvDataString = JSON.stringify(extractedData.value)
+    console.log('CV Data String:', cvDataString) // Kiểm tra dữ liệu
     router.push({
       name: 'edit-cv',
       params: { data: encodeURIComponent(cvDataString) }

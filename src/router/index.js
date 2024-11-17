@@ -50,12 +50,7 @@ const router = createRouter({
       component: ConvertPage
     },
     {
-      path: '/edit/:data?',
-      name: 'edit-cv',
-      component: () => EditPage
-    },
-    {
-      path: '/edit-cv',
+      path: '/edit-cv/:data?',
       name: 'edit-cv',
       component: EditPage
     },
