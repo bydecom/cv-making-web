@@ -15,7 +15,7 @@
       <input
         type="text"
         v-model="pdfUrl"
-        placeholder="Enter PDF URL"
+        placeholder="Enter PDF/Image URL"
         class="w-full p-2 border rounded"
       />
     </div>
@@ -32,7 +32,7 @@
 
     <!-- Extract Button -->
     <button
-      @click="processPdf"
+      @click="processUrl"
       class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       :disabled="isLoading"
     >
@@ -121,9 +121,10 @@ const showPopup = ref(false) // Trạng thái hiển thị popup
 const pdfContent = ref('') // Nội dung PDF đã đọc
 const matchingRecruitmentIds = ref([]) // Danh sách ID tuyển dụng phù hợp
 const popupMessage = ref('') // Thông báo hiển thị trong popup
-//<====================================================================================================>
-// Fetch data
+
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
+
+// Fetch data
 const fetchBusinessData = async () => {
   const url = 'https://intern.pantech.vn/hcmute/api/business/GetBusinessWithRecruitmentsPaging'
   const requestData = {
@@ -155,7 +156,6 @@ const fetchBusinessData = async () => {
     isLoading.value = false
   }
 }
-//<====================================================================================================>
 
 // Hàm trích xuất data cần thiết từ danh sách tuyển dụng
 const extractRecruitments = () => {
@@ -172,28 +172,36 @@ const extractRecruitments = () => {
     }))
 }
 
-// Hàm xử lý file PDF được tải lên
+// Hàm xử lý file được tải lên
 const handleFileUpload = async (event) => {
   const file = event.target.files[0]
   if (file) {
-    if (file.type === 'application/pdf') {
-      await processPdfFromFile(file)
-    } else if (file.type.startsWith('image/')) {
-      await processImageFile(file)
-    } else {
-      error.value = 'Please upload a valid PDF or image file.'
+    isLoading.value = true
+    error.value = null
+    pdfContent.value = '' // Reset pdfContent before processing
+    matchingRecruitmentIds.value = [] // Reset matching IDs before processing
+    popupMessage.value = '' // Reset popup message before processing
+
+    try {
+      if (file.type === 'application/pdf') {
+        // Nếu là file PDF, gọi hàm xử lý PDF
+        await processPdfFromFile(file)
+      } else if (file.type.startsWith('image/')) {
+        // Nếu là file ảnh, gọi hàm xử lý ảnh
+        await processImageFile(file)
+      } else {
+        error.value = 'Please upload a valid PDF or image file.'
+      }
+    } catch (err) {
+      error.value = `Error processing file: ${err.message}`
+    } finally {
+      isLoading.value = false
     }
   }
 }
 
-// Hàm xử lý PDF từ file
+// Hàm xử lý file PDF
 const processPdfFromFile = async (file) => {
-  isLoading.value = true
-  error.value = null
-  pdfContent.value = '' // Reset pdfContent before processing
-  matchingRecruitmentIds.value = [] // Reset matching IDs before processing
-  popupMessage.value = '' // Reset popup message before processing
-
   const fileReader = new FileReader()
   fileReader.onload = async (e) => {
     const typedarray = new Uint8Array(e.target.result)
@@ -218,11 +226,9 @@ const processPdfFromFile = async (file) => {
       showPopup.value = true // Hiển thị popup với danh sách tuyển dụng
     } catch (err) {
       error.value = `Error reading PDF: ${err.message}`
-    } finally {
-      isLoading.value = false
     }
   }
-  fileReader.readAsArrayBuffer(file)
+  fileReader.readAsArrayBuffer(file) // Đọc file dưới dạng ArrayBuffer
 }
 
 // Hàm xử lý file ảnh
@@ -255,10 +261,75 @@ const processImageFile = async (file) => {
     isLoading.value = false
   }
 }
-//<====================================================================================================>
-// Hàm lấy top 5 công việc phù hợp nhất
-// Nếu không phải CV thì isValidCV:false
 
+// Hàm xử lý URL
+const processUrl = async () => {
+  if (!pdfUrl.value) {
+    error.value = 'Please enter a valid PDF/Image URL.'
+    return
+  }
+
+  isLoading.value = true
+  error.value = null
+  pdfContent.value = '' // Reset pdfContent before processing
+  matchingRecruitmentIds.value = [] // Reset matching IDs before processing
+  popupMessage.value = '' // Reset popup message before processing
+
+  try {
+    const response = await fetch(pdfUrl.value)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch file: ${response.status}`)
+    }
+
+    const contentType = response.headers.get('Content-Type')
+    const blob = await response.blob()
+
+    if (contentType === 'application/pdf') {
+      await processPdfFromBlob(blob)
+    } else if (contentType.startsWith('image/')) {
+      await processImageFile(blob)
+    } else {
+      error.value = 'The URL does not point to a valid PDF or image file.'
+    }
+  } catch (err) {
+    error.value = `Error processing URL: ${err.message}`
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Hàm xử lý PDF từ blob
+const processPdfFromBlob = async (blob) => {
+  const fileReader = new FileReader()
+  fileReader.onload = async (e) => {
+    const typedarray = new Uint8Array(e.target.result)
+    try {
+      const pdf = await getDocument(typedarray).promise // Tải PDF từ blob
+      const numPages = pdf.numPages
+      let textContent = ''
+
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdf.getPage(i)
+        const text = await page.getTextContent()
+        const textItems = text.items.map((item) => item.str)
+        textContent += textItems.join(' ') + ' '
+      }
+
+      console.log('Extracted Text from PDF:', textContent)
+      pdfContent.value = textContent // Lưu nội dung PDF vào biến pdfContent
+
+      // Gọi hàm để so sánh với dữ liệu tuyển dụng
+      await compareWithRecruitments(textContent)
+
+      showPopup.value = true // Hiển thị popup với danh sách tuyển dụng
+    } catch (err) {
+      error.value = `Error reading PDF: ${err.message}`
+    }
+  }
+  fileReader.readAsArrayBuffer(blob)
+}
+
+// Hàm lấy top 5 công việc phù hợp nhất
 const compareWithRecruitments = async (cvData) => {
   const model = genAI.getGenerativeModel({
     model: 'gemini-1.5-flash',
@@ -323,7 +394,6 @@ Your tasks:
     error.value = `Failed to compare with recruitments: ${error.message}`
   }
 }
-//<====================================================================================================>
 
 // Fetch dữ liệu khi component mounted
 onMounted(() => {
