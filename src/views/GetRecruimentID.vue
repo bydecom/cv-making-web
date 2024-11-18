@@ -217,6 +217,12 @@ const processPdfFromFile = async (file) => {
         textContent += textItems.join(' ') + ' '
       }
 
+      // Nếu textContent rỗng, chuyển sang OCR
+      if (textContent.trim() === '') {
+        console.warn('PDF không chứa văn bản thực, chuyển sang OCR...')
+        textContent = await extractTextUsingOCR(pdf, numPages) // Gọi OCR
+      }
+
       console.log('Extracted Text from PDF:', textContent)
       pdfContent.value = textContent // Lưu nội dung PDF vào biến pdfContent
 
@@ -229,6 +235,37 @@ const processPdfFromFile = async (file) => {
     }
   }
   fileReader.readAsArrayBuffer(file) // Đọc file dưới dạng ArrayBuffer
+}
+
+// Hàm OCR (nhận diện văn bản từ ảnh PDF)
+const extractTextUsingOCR = async (pdf, numPages) => {
+  let ocrText = ''
+
+  for (let i = 1; i <= numPages; i++) {
+    const page = await pdf.getPage(i)
+
+    // Render trang PDF thành canvas
+    const viewport = page.getViewport({ scale: 1 })
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    canvas.height = viewport.height
+    canvas.width = viewport.width
+    await page.render({ canvasContext: context, viewport }).promise
+
+    // Nhận diện văn bản từ canvas bằng Tesseract
+    const dataUrl = canvas.toDataURL('image/png')
+    const result = await Tesseract.recognize(
+      dataUrl,
+      'eng', // Ngôn ngữ nhận diện
+      {
+        logger: (m) => console.log(m), // Ghi log quá trình nhận diện
+      }
+    )
+
+    ocrText += result.data.text + ' '
+  }
+
+  return ocrText
 }
 
 // Hàm xử lý file ảnh
