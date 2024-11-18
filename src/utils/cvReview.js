@@ -16,6 +16,14 @@ const model = genAI.getGenerativeModel({
         "education_and_certifications": "string"
       }
     ],
+    "Skill": [
+      {
+        "score": "string",
+        "hard_skill": "string",
+        "soft_skill": "string",
+        "presentaion_of_skill": "string",
+      }
+    ],
     "Formatting_and_Layout": [
       {
         "score": "string",
@@ -95,6 +103,57 @@ const model = genAI.getGenerativeModel({
         Customization:
         Has the CV been tailored for the specific company and role?
         Does it reflect the candidate’s unique skills or personality?
+    For instance, a perfect score might look like this:
+
+    Content: 40/40
+    Skills: 18/20
+    Formatting: 14/15
+    Professionalism: 15/15
+    Creativity: 8/10
+    ### Sample output:
+        {
+      "Content": [
+        {
+          "score": "20/40",
+          "relevance_to_the_job": "The CV aligns well with the job description, highlighting relevant skills and experiences such as project management and team leadership.",
+          "career_objective": "The objective is clear and aligns with the role, focusing on growth in software development.",
+          "experience_and_achievements": "Experience section is detailed, with quantifiable achievements like 'increased team productivity by 25%.'",
+          "education_and_certifications": "Relevant degrees (B.Sc. Computer Science) and certifications (AWS Certified Developer) are included."
+        }
+      ],
+        "Skill": [
+      {
+      "score": "18/20",
+      "hard_skill": "JavaScript, React, Node.js",
+      "soft_skill": "Teamwork, Problem-solving, Communication",
+      "presentation_of_skill": "Proficient in JavaScript frameworks (React, Node.js) with experience in building scalable web applications. Strong problem-solving and communication skills demonstrated through successful team projects."
+      },
+    ],   
+      "Formatting_and_Layout": [
+        {
+          "score": "15/20",
+          "structure": "The CV is organized with clear sections, but the skills section could be better integrated with the experience.",
+          "length": "The CV is concise and fits within 2 pages.",
+          "readability": "Font size and headings are professional, but excessive use of bold text reduces readability.",
+          "proofreading": "A few minor grammatical errors were noted."
+        }
+      ],
+      "Professionalism": [
+        {
+          "score": "15/15",
+          "contact_information": "All information is accurate and professional, with a formal email address included.",
+          "tone_and_style": "The tone is formal and consistent throughout.",
+          "authenticity": "The CV appears honest and avoids exaggerations."
+        }
+      ],
+      "Creativity_and_Differentiation": [
+        {
+          "score": "6/10",
+          "visual_appeal": "The design is clean but lacks creativity, which may be acceptable for a technical role.",
+          "customization": "Some customization is evident, but generic descriptions in the objective suggest room for improvement."
+        }
+      ]
+    }
   `
 })
 
@@ -129,7 +188,12 @@ export const parseTextToCV = async (text) => {
       const parsedData = JSON.parse(content)
 
       // Check if the response follows the required structure
-      if (parsedData.firstName && parsedData.lastName && parsedData.jobTitle) {
+      if (
+        parsedData.Content &&
+        parsedData.Formatting_and_Layout &&
+        parsedData.Professionalism &&
+        parsedData.Creativity_and_Differentiation
+      ) {
         console.log('Parsed CV Data:', parsedData)
         return parsedData
       } else {
