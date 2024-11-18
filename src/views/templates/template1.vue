@@ -1,12 +1,6 @@
 <template>
   <div class="w-1/2 p-8 bg-white overflow-auto">
-    <div class="flex justify-between mb-4">
-      <button class="button">Select template</button>
-      <div>
-        <button class="button mr-2">Aa</button>
-        <button class="button">Download PDF</button>
-      </div>
-    </div>
+    <div class="flex justify-between mb-4"></div>
     <div class="card">
       <div class="card-content p-6">
         <div class="grid grid-cols-3 gap-4">

@@ -17,7 +17,12 @@
               Resume
             </router-link>
             <router-link to="/convert" class="hover:text-gray-800">Convert CV</router-link>
-            <a class="hover:text-gray-800" href="#" target="_blank" rel="noopener noreferrer">
+            <a
+              class="hover:text-gray-800"
+              href="/reviewcv"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               CV Review
             </a>
             <router-link to="/emaileditor" class="flex items-center hover:text-gray-800">
@@ -77,7 +82,7 @@
               Convert CV
             </router-link>
             <a
-              href="#"
+              href="/reviewcv"
               target="_blank"
               rel="noopener noreferrer"
               class="block text-gray-600 hover:text-gray-800 py-2"

@@ -9,6 +9,7 @@ import EmailEditor from '@/views/EmailEditor.vue'
 import ConvertPage from '../views/ConvertPage.vue'
 import AboutView from '@/views/AboutView.vue'
 import EnhanceEmail from '@/views/EnhanceEmail.vue'
+import ReviewCV from '@/views/ReviewCV.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,6 +69,11 @@ const router = createRouter({
       path: '/enhancemail',
       name: 'enhancemail',
       component: EnhanceEmail
+    },
+    {
+      path: '/reviewcv',
+      name: 'reviewcv',
+      component: ReviewCV
     }
   ]
 })

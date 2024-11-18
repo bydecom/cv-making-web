@@ -1,36 +1,38 @@
 <template>
-  <div class="cv-container">
-    <div class="header">
-      <h1 class="name">{{ cvData.firstName }} {{ cvData.lastName }}</h1>
-      <p class="job-title">{{ cvData.jobTitle }}</p>
-      <p>Date of Birth: {{ cvData.dateOfBirth }}</p>
-      <p>Address: {{ cvData.address }}</p>
-      <p>Phone: {{ cvData.phone }}</p>
-      <p>Email: {{ cvData.email }}</p>
-      <img v-if="cvData.photo" :src="cvData.photo" alt="Profile Photo" />
-    </div>
-    <div class="career-objective">
-      <h2>Career Objective</h2>
-      <p>{{ cvData.summary }}</p>
-    </div>
-    <div class="experience">
-      <h2>Work Experience</h2>
-      <div v-for="(exp, index) in cvData.experience" :key="index">
-        <h3>{{ exp.position }} at {{ exp.company }} ({{ exp.period }})</h3>
-        <p>{{ exp.description }}</p>
+  <div class="bg-white min-h-screen p-8 flex justify-center items-center">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-4xl w-full">
+      <div class="header text-center mb-8">
+        <h1 class="name text-3xl font-bold">{{ cvData.firstName }} {{ cvData.lastName }}</h1>
+        <p class="job-title text-xl">{{ cvData.jobTitle }}</p>
+        <p>Date of Birth: {{ cvData.dateOfBirth }}</p>
+        <p>Address: {{ cvData.address }}</p>
+        <p>Phone: {{ cvData.phone }}</p>
+        <p>Email: {{ cvData.email }}</p>
+        <img v-if="cvData.photo" :src="cvData.photo" alt="Profile Photo" />
       </div>
-    </div>
-    <div class="education">
-      <h2>Education</h2>
-      <div v-for="(edu, index) in cvData.education" :key="index">
-        <h3>{{ edu.major }} - {{ edu.school }} ({{ edu.year }})</h3>
+      <div class="career-objective mb-8">
+        <h2 class="text-2xl font-semibold">Career Objective</h2>
+        <p>{{ cvData.summary }}</p>
       </div>
-    </div>
-    <div class="skills">
-      <h2>Skills</h2>
-      <ul>
-        <li v-for="(skill, index) in cvData.skills" :key="index">{{ skill }}</li>
-      </ul>
+      <div class="experience mb-8">
+        <h2 class="text-2xl font-semibold">Work Experience</h2>
+        <div v-for="(exp, index) in cvData.experience" :key="index">
+          <h3>{{ exp.position }} at {{ exp.company }} ({{ exp.period }})</h3>
+          <p>{{ exp.description }}</p>
+        </div>
+      </div>
+      <div class="education mb-8">
+        <h2 class="text-2xl font-semibold">Education</h2>
+        <div v-for="(edu, index) in cvData.education" :key="index">
+          <h3>{{ edu.major }} - {{ edu.school }} ({{ edu.year }})</h3>
+        </div>
+      </div>
+      <div class="skills mb-8">
+        <h2 class="text-2xl font-semibold">Skills</h2>
+        <ul>
+          <li v-for="(skill, index) in cvData.skills" :key="index">{{ skill }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

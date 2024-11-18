@@ -8,6 +8,8 @@
 import { defineProps, ref, defineExpose } from 'vue' // Import ref here
 import html2pdf from 'html2pdf.js'
 import Template4 from './templates/template4.vue'
+import Template1 from './templates/template1.vue'
+
 // Use defineProps directly
 const props = defineProps(['cvData', 'image']) // Add image prop
 const isExporting = ref(false)
