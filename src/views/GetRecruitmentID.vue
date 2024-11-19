@@ -258,7 +258,7 @@ const extractTextUsingOCR = async (pdf, numPages) => {
       dataUrl,
       'eng', // Ngôn ngữ nhận diện
       {
-        logger: (m) => console.log(m), // Ghi log quá trình nhận diện
+        logger: (m) => console.log(m) // Ghi log quá trình nhận diện
       }
     )
 

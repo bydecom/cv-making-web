@@ -10,7 +10,8 @@ import ConvertPage from '../views/ConvertPage.vue'
 import AboutView from '@/views/AboutView.vue'
 import EnhanceEmail from '@/views/EnhanceEmail.vue'
 import ReviewCV from '@/views/ReviewCV.vue'
-import GetRecruitmentID from '@/views/GetRecruimentID.vue'
+import GetRecruitmentIDTitle from '@/views/GetRecruitmentIDTitle.vue'
+import GetRecruitmentID from '@/views/GetRecruitmentID.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,11 @@ const router = createRouter({
     {
       path: '/test',
       name: 'test',
+      component: GetRecruitmentIDTitle
+    },
+    {
+      path: '/test1',
+      name: 'test1',
       component: GetRecruitmentID
     },
     {

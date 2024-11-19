@@ -145,7 +145,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { extractTextFromFile } from '../utils/textExtractor'
-import { parseTextToCV } from '../utils/cvParser'
+import { parseTextToCV, handleCVParsing } from '../utils/cvParser'
 
 const router = useRouter()
 const selectedFile = ref(null)
@@ -197,6 +197,9 @@ const processFile = async () => {
       throw new Error('Failed to parse CV data')
     }
     updateStepStatus(3, 'completed')
+
+    // Call handleCVParsing with cvData and router
+    await handleCVParsing(cvData, router)
 
     // Step 4: Done
     updateStepStatus(4, 'processing')

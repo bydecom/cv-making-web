@@ -209,9 +209,8 @@ export const parseTextToCV = async (text) => {
   }
 }
 
-// Example usage with extractedText
-const extractedText = `Your CV text here...` // Replace with your actual text or data
-;(async () => {
+// Function to handle CV review
+export const handleCVReview = async (extractedText, router) => {
   try {
     // Parse the extracted CV text into structured data
     const parsedCV = await parseTextToCV(extractedText)
@@ -223,11 +222,21 @@ const extractedText = `Your CV text here...` // Replace with your actual text or
     const cvDataString = JSON.stringify(parsedCV) // Convert the parsed CV to a string
     // Assuming you are using Vue Router, you can pass this data to another page
     router.push({
-      name: 'edit-cv',
+      name: 'edit-cv-review',
       params: { data: encodeURIComponent(cvDataString) }
     })
   } catch (error) {
     console.error('Error:', error.message)
+  }
+}
+
+// Example usage with extractedText
+const extractedText = `Your CV text here...` // Replace with your actual text or data
+;(async () => {
+  try {
+    await handleCVReview(extractedText, router) // Call the handleCVReview function
+  } catch (error) {
+    console.error('Error during review:', error)
   }
 })()
 

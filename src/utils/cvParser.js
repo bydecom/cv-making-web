@@ -52,6 +52,7 @@ const model = genAI.getGenerativeModel({
     - If the information does not clearly, attempt to infer it. This should be a best guess and should not be guaranteed.
     - The gender should be returned as "male", "female", or "null" if it cannot be inferred.
     - You must NOT include any other explanatory text.
+    - set Null to data that not exist
   `
 })
 
@@ -102,9 +103,8 @@ export const parseTextToCV = async (text) => {
   }
 }
 
-// Example usage with extractedText
-const extractedText = `Your CV text here...` // Replace with your actual text or data
-;(async () => {
+// Function to handle CV parsing
+export const handleCVParsing = async (extractedText, router) => {
   try {
     // Parse the extracted CV text into structured data
     const parsedCV = await parseTextToCV(extractedText)
@@ -122,7 +122,7 @@ const extractedText = `Your CV text here...` // Replace with your actual text or
   } catch (error) {
     console.error('Error:', error.message)
   }
-})()
+}
 
 // import { GoogleGenerativeAI } from '@google/generative-ai'
 
