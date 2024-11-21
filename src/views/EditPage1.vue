@@ -6,7 +6,8 @@
       @export-cv="exportCV"
       @update-image="handleImageUpdate"
     />
-    <CvPreview ref="cvPreview" :cvData="cvData" />
+    <CvPreview ref="cvPreview" :cvData="cvData" :image="imageData" />
+    <CvPreview ref="cvPreview" :cvData="cvData" :image="imageData" />
   </div>
 </template>
 

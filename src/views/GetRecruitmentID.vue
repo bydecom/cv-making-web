@@ -369,7 +369,7 @@ const processPdfFromBlob = async (blob) => {
 // Hàm lấy top 5 công việc phù hợp nhất
 const compareWithRecruitments = async (cvData) => {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash',
+    model: import.meta.env.VITE_APP_AI_MODEL,
     systemInstruction: `You are a recruitment matcher that validates and analyzes CV data to find the most suitable job IDs from a given list of recruitments.
 
 Your tasks:

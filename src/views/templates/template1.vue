@@ -1,8 +1,8 @@
 <template>
-  <div class="w-1/2 p-8 bg-white overflow-auto">
-    <div class="flex justify-between mb-4"></div>
+  <div class="w-3/4 p-8 bg-white overflow-auto">
+    <div class="flex justify-between"></div>
     <div class="card">
-      <div class="card-content p-6">
+      <div class="card-content p-8">
         <div class="grid grid-cols-3 gap-4">
           <div class="col-span-2">
             <h1 class="text-3xl font-bold">{{ cvData.firstName }} {{ cvData.lastName }}</h1>
@@ -27,7 +27,7 @@
             </span>
           </div>
         </div>
-        <div class="mt-6">
+        <div class="mt-12">
           <h2 class="text-xl font-semibold mb-2">Experience</h2>
           <div v-for="(exp, index) in cvData.experience" :key="index" class="mb-4">
             <h3 class="font-semibold">{{ exp.title }}</h3>
@@ -35,7 +35,7 @@
             <p>{{ exp.description }}</p>
           </div>
         </div>
-        <div class="mt-6">
+        <div class="mt-12">
           <h2 class="text-xl font-semibold mb-2">Education</h2>
           <div v-for="(edu, index) in cvData.education" :key="index">
             <h3 class="font-semibold">{{ edu.degree }}</h3>
@@ -64,10 +64,10 @@ const props = defineProps(['cvData'])
 }
 .card {
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
+  border: 0px solid #ccc;
+  border-radius: 0.5rem;
 }
 .card-content {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 </style>

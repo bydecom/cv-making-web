@@ -2,7 +2,6 @@
   <div class="w-1/2 p-8 overflow-auto editor-container">
     <h2 class="text-2xl font-bold mb-6">Edit Your CV</h2>
     <div class="space-y-4">
-      <input type="file" @change="onFileChange" accept="image/*" class="input" />
       <input v-model="cvData.firstName" placeholder="First Name" class="input" />
       <input v-model="cvData.lastName" placeholder="Last Name" class="input" />
       <input v-model="cvData.jobTitle" placeholder="Job Title" class="input" />

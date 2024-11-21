@@ -82,7 +82,7 @@
               <strong>{{ job.title }}</strong> (ID: {{ job.recruitmentId }})
             </li>
           </ul>
-
+          <!-- Đổi: show thêm dữ liệu title để check trên UI -->
           <div class="text-center mt-4">
             <button
               @click="showPopup = false"
@@ -390,6 +390,7 @@ const compareWithRecruitments = async (cvData) => {
     }
   ]
 }
+
 - isValidCV: true if the input resembles a CV, otherwise false.
 - matchingJobs: A list of up to best 5 objects, each containing:
   - recruitmentId: the ID of the matching job.
@@ -398,6 +399,8 @@ const compareWithRecruitments = async (cvData) => {
 
   `
   })
+  // Đổi: Sửa cái propmt lại (ông copy nguyên cái prompt cho nó chuẩn á)
+  //==============================================================
 
   const generationConfig = {
     temperature: 0.1,
@@ -431,6 +434,7 @@ const compareWithRecruitments = async (cvData) => {
     // Check if the response contains the expected structure
     if (parsedData.isValidCV) {
       matchingRecruitmentIds.value = parsedData.matchingJobs || []
+      //===================================================== Đổi: parsedData.matchingIDs thành parsedData.matchingJobs
       popupMessage.value = matchingRecruitmentIds.value.length > 0 ? '' : 'No suitable jobs found.'
     } else {
       popupMessage.value = 'This is not a valid CV.'

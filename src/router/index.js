@@ -12,6 +12,7 @@ import EnhanceEmail from '@/views/EnhanceEmail.vue'
 import ReviewCV from '@/views/ReviewCV.vue'
 import GetRecruitmentIDTitle from '@/views/GetRecruitmentIDTitle.vue'
 import GetRecruitmentID from '@/views/GetRecruitmentID.vue'
+import ChatToFindJob from '@/views/ChatToFindJob.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: ChatToFindJob
     },
     {
       path: '/test',

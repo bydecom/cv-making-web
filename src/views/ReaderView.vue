@@ -84,7 +84,7 @@ const parsedText = ref('')
 const isLoading = ref(false)
 const pdfLink = ref('')
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-002' })
 
 const handleFileUpload = (event) => {
   selectedFile.value = event.target.files[0]

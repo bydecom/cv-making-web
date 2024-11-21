@@ -1,33 +1,38 @@
 <template>
   <div class="cv-container">
-    <Template4 :cvData="cvData" :image="imageData" />
+    <Template1 :cvData="cvData" />
   </div>
 </template>
 
 <script setup>
 import { defineProps, ref, defineExpose } from 'vue' // Import ref here
-import html2pdf from 'html2pdf.js'
-import Template4 from './templates/template4.vue'
+//import html2pdf from 'html2pdf.js'
+//import Template4 from './templates/template4.vue'
 import Template1 from './templates/template1.vue'
+//import Template2 from './templates/template2.vue'
 
 // Use defineProps directly
 const props = defineProps(['cvData', 'image']) // Add image prop
 const isExporting = ref(false)
 // const imageData = ref('') // New ref to hold the image data
 
+import jsPDF from 'jspdf'
+
 const exportCv = async () => {
   isExporting.value = true
-  const element = document.querySelector('.cv-container')
-  const options = {
-    margin: 0,
-    filename: `${props.cvData.firstName}_${props.cvData.lastName}.pdf`,
-    image: { type: 'jpeg', quality: 1 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-  }
-
   try {
-    await html2pdf().from(element).set(options).save()
+    const doc = new jsPDF('portrait', 'pt', 'letter') // Tạo file PDF (đơn vị pt, khổ giấy Letter)
+    const element = document.querySelector('.cv-container')
+
+    // Thêm nội dung HTML vào file PDF (dạng văn bản)
+    doc.html(element, {
+      callback: (doc) => {
+        doc.save(`${props.cvData.firstName}_${props.cvData.lastName}.pdf`)
+      },
+      html2canvas: {
+        scale: 0.75 // Giảm kích thước xuống 75% so với gốc
+      }
+    })
   } catch (error) {
     console.error('Error exporting CV:', error)
   } finally {
