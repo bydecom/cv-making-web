@@ -72,7 +72,10 @@
 </template>
 
 <script>
-import resume01 from '@/assets/resume-01.jpg'
+import resume01 from '@/assets/1.jpg'
+import resume02 from '@/assets/2.jpg'
+import resume03 from '@/assets/3.jpg'
+import resume04 from '@/assets/4.jpg'
 
 export default {
   data() {
@@ -88,37 +91,23 @@ export default {
         {
           id: 2,
           name: 'Minimalist',
-          image: resume01,
+          image: resume02,
           category: 'Minimalist',
           description: 'A clean and minimalist template.'
         },
         {
           id: 3,
           name: 'Tech Innovator',
-          image: resume01,
+          image: resume03,
           category: 'Tech',
           description: 'A modern template for tech professionals.'
         },
         {
           id: 4,
           name: 'Creative Edge',
-          image: resume01,
+          image: resume04,
           category: 'Creative',
           description: 'A creative template for designers.'
-        },
-        {
-          id: 5,
-          name: 'Academic Excellence',
-          image: resume01,
-          category: 'Academic',
-          description: 'An academic template for scholars.'
-        },
-        {
-          id: 6,
-          name: 'Modern Sleek',
-          image: resume01,
-          category: 'Professional',
-          description: 'A sleek and modern template.'
         }
       ],
       categories: ['All', 'Professional', 'Minimalist', 'Tech', 'Creative', 'Academic'],
@@ -140,7 +129,7 @@ export default {
     },
     selectTemplate(templateId) {
       this.selectedTemplate = templateId
-      this.$router.push({ name: 'EditPage', params: { templateId } }) // Navigate to EditPage with selected template ID
+      this.$router.push(`/templates/edit${templateId - 1}`)
     }
   }
 }

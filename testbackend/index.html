@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Enhancer</title>
+</head>
+<body>
+    <h1>Email Enhancer</h1>
+    <form id="emailForm">
+        <label for="emailContent">Enter your email content:</label><br>
+        <textarea id="emailContent" rows="10" cols="30" required></textarea><br>
+        <button type="submit">Enhance Email</button>
+    </form>
+    <h2>Enhanced Email:</h2>
+    <pre id="enhancedEmail"></pre>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const emailContent = document.getElementById('emailContent').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ Email: { value: emailContent } }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                document.getElementById('enhancedEmail').textContent = data;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

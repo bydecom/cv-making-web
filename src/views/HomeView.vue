@@ -12,11 +12,13 @@
       <p class="text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
         Easy to use and ready in just minutes. Try it for free now!
       </p>
-      <button
+      <a
+        href="/templates"
         class="bg-blue-500 text-white px-6 py-4 rounded-md text-xl font-semibold hover:bg-blue-600"
       >
         Create my resume
-      </button>
+      </a>
+
       <p class="text-sm text-gray-500 mt-4">30 resumes created</p>
 
       <transition appear name="slide-up">

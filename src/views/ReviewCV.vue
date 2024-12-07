@@ -3,7 +3,7 @@
     <div class="relative py-3 sm:max-w-xl sm:mx-auto">
       <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
         <div class="max-w-md mx-auto">
-          <h1 class="text-2xl font-semibold mb-6 text-center">CV Data Extractor</h1>
+          <h1 class="text-2xl font-semibold mb-6 text-center">Score Your CV Here</h1>
 
           <!-- File Upload Section -->
           <div class="mb-6">
@@ -30,15 +30,117 @@
             {{ isProcessing ? 'Processing...' : 'Extract CV Data' }}
           </button>
 
+          <!-- Progress Bar -->
+          <div class="mt-4">
+            <div class="bg-gray-200 rounded-full h-2">
+              <div
+                class="bg-blue-500 h-2 rounded-full"
+                :style="{ width: progressWidth + '%' }"
+              ></div>
+            </div>
+            <p class="text-center mt-1">{{ getCurrentStepDescription() }}</p>
+          </div>
+
           <!-- Preview Section -->
           <div v-if="extractedData" class="mt-6">
-            <pre class="bg-gray-50 p-4 rounded">{{ JSON.stringify(extractedData, null, 2) }}</pre>
-            <button
+            <h2 class="text-lg font-semibold mb-4">Analysis Results:</h2>
+
+            <!-- Content Analysis -->
+            <div v-if="extractedData.Content" class="mb-6">
+              <h3 class="text-blue-500 font-bold mb-2">Content Analysis</h3>
+              <div class="space-y-4">
+                <div
+                  v-for="(item, index) in extractedData.Content"
+                  :key="'content-' + index"
+                  class="p-4 bg-gray-50 rounded shadow"
+                >
+                  <p><strong>Score:</strong> {{ item.score }}</p>
+                  <p><strong>Relevance:</strong> {{ item.relevance_to_the_job }}</p>
+                  <p><strong>Career Objective:</strong> {{ item.career_objective }}</p>
+                  <p><strong>Experience:</strong> {{ item.experience_and_achievements }}</p>
+                  <p><strong>Education:</strong> {{ item.education_and_certifications }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Skill Analysis -->
+            <div v-if="extractedData.Skill" class="mb-6">
+              <h3 class="text-blue-500 font-bold mb-2">Skill Analysis</h3>
+              <div class="p-4 bg-gray-50 rounded shadow">
+                <p><strong>Score:</strong> {{ extractedData.Skill[0].score }}</p>
+                <p><strong>Hard Skills:</strong> {{ extractedData.Skill[0].hard_skill }}</p>
+                <p><strong>Soft Skills:</strong> {{ extractedData.Skill[0].soft_skill }}</p>
+                <p>
+                  <strong>Presentation:</strong> {{ extractedData.Skill[0].presentaion_of_skill }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Formatting and Layout -->
+            <div v-if="extractedData.Formatting_and_Layout" class="mb-6">
+              <h3 class="text-blue-500 font-bold mb-2">Formatting and Layout</h3>
+              <div class="p-4 bg-gray-50 rounded shadow">
+                <p><strong>Score:</strong> {{ extractedData.Formatting_and_Layout[0].score }}</p>
+                <p>
+                  <strong>Structure:</strong> {{ extractedData.Formatting_and_Layout[0].structure }}
+                </p>
+                <p><strong>Length:</strong> {{ extractedData.Formatting_and_Layout[0].length }}</p>
+                <p>
+                  <strong>Readability:</strong>
+                  {{ extractedData.Formatting_and_Layout[0].readability }}
+                </p>
+                <p>
+                  <strong>Proofreading:</strong>
+                  {{ extractedData.Formatting_and_Layout[0].proofreading }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Professionalism -->
+            <div v-if="extractedData.Professionalism" class="mb-6">
+              <h3 class="text-blue-500 font-bold mb-2">Professionalism</h3>
+              <div class="p-4 bg-gray-50 rounded shadow">
+                <p><strong>Score:</strong> {{ extractedData.Professionalism[0].score }}</p>
+                <p>
+                  <strong>Contact Information:</strong>
+                  {{ extractedData.Professionalism[0].contact_information }}
+                </p>
+                <p>
+                  <strong>Tone and Style:</strong>
+                  {{ extractedData.Professionalism[0].tone_and_style }}
+                </p>
+                <p>
+                  <strong>Authenticity:</strong> {{ extractedData.Professionalism[0].authenticity }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Creativity and Differentiation -->
+            <div v-if="extractedData.Creativity_and_Differentiation" class="mb-6">
+              <h3 class="text-blue-500 font-bold mb-2">Creativity and Differentiation</h3>
+              <div class="p-4 bg-gray-50 rounded shadow">
+                <p>
+                  <strong>Score:</strong>
+                  {{ extractedData.Creativity_and_Differentiation[0].score }}
+                </p>
+                <p>
+                  <strong>Visual Appeal:</strong>
+                  {{ extractedData.Creativity_and_Differentiation[0].visual_appeal }}
+                </p>
+                <p>
+                  <strong>Customization:</strong>
+                  {{ extractedData.Creativity_and_Differentiation[0].customization }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Proceed to Edit Button -->
+            <!-- <button
               @click="proceedToEditor"
               class="mt-4 w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             >
               Edit CV
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -50,92 +152,8 @@
       class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
     >
       <div class="relative top-20 mx-auto p-5 border w-[32rem] shadow-lg rounded-md bg-white">
-        <div class="mt-3">
-          <h3 class="text-lg font-medium text-gray-900 text-center mb-4">Processing CV</h3>
-
-          <!-- Progress Steps -->
-          <div class="w-full max-w-md mx-auto mb-8">
-            <div class="relative">
-              <!-- Progress Line -->
-              <div
-                class="absolute left-0 top-1/2 transform -translate-y-1/2 h-1 bg-gray-200 w-full"
-              ></div>
-              <div
-                class="absolute left-0 top-1/2 transform -translate-y-1/2 h-1 bg-blue-500 transition-all duration-500"
-                :style="{ width: `${progressWidth}%` }"
-              ></div>
-
-              <!-- Steps -->
-              <div class="relative flex justify-between">
-                <template v-for="(step, index) in steps" :key="step.id">
-                  <div class="relative z-10">
-                    <!-- Step Circle -->
-                    <div
-                      class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
-                      :class="[
-                        step.status === 'completed'
-                          ? 'bg-blue-500'
-                          : step.status === 'processing'
-                            ? 'bg-blue-500 border-2 border-blue-500'
-                            : 'bg-gray-200'
-                      ]"
-                    >
-                      <!-- Check Icon for Completed -->
-                      <svg
-                        v-if="step.status === 'completed'"
-                        class="w-6 h-6 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      <!-- Number for Other States -->
-                      <span
-                        v-else
-                        :class="[step.status === 'processing' ? 'text-white' : 'text-gray-500']"
-                        class="text-sm font-semibold"
-                      >
-                        {{ step.id }}
-                      </span>
-                    </div>
-
-                    <!-- Step Label -->
-                    <div
-                      class="absolute -bottom-6 w-max text-xs font-medium text-center"
-                      :class="[
-                        step.status === 'completed' || step.status === 'processing'
-                          ? 'text-blue-500'
-                          : 'text-gray-500'
-                      ]"
-                      :style="{
-                        left: '50%',
-                        transform: 'translateX(-50%)'
-                      }"
-                    >
-                      {{ step.name }}
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </div>
-          </div>
-
-          <!-- Current Step Description -->
-          <div class="text-center mt-8">
-            <p class="text-sm text-gray-600">{{ getCurrentStepDescription() }}</p>
-          </div>
-
-          <!-- Error Message -->
-          <div v-if="processingError" class="mt-4 text-red-500 text-sm text-center">
-            {{ processingError }}
-          </div>
-        </div>
+        <h3 class="text-lg font-medium text-gray-900 text-center mb-4">Processing CV</h3>
+        <!-- Add progress steps here as per your current implementation -->
       </div>
     </div>
   </div>
@@ -154,6 +172,7 @@ const isProcessing = ref(false)
 const extractedData = ref(null)
 const showProgressModal = ref(false)
 const processingError = ref(null)
+const totalScore = ref(0)
 
 const steps = ref([
   { id: 1, name: 'Upload', status: 'pending' },
@@ -203,7 +222,7 @@ const processFile = async () => {
     extractedData.value = cvData
     updateStepStatus(4, 'completed')
 
-    // Tự động ẩn modal sau 2 giây
+    // Automatically hide modal after 2 seconds
     setTimeout(() => {
       showProgressModal.value = false
     }, 2000)
@@ -227,7 +246,7 @@ const proceedToEditor = () => {
 
   try {
     const cvDataString = JSON.stringify(extractedData.value)
-    console.log('CV Data String:', cvDataString) // Kiểm tra dữ liệu
+    console.log('CV Data String:', cvDataString) // Check data
     router.push({
       name: 'edit-cv',
       params: { data: encodeURIComponent(cvDataString) }
@@ -263,12 +282,12 @@ const resetSteps = () => {
 const progressWidth = computed(() => {
   const completedSteps = steps.value.filter((step) => step.status === 'completed').length
   const processingStep = steps.value.find((step) => step.status === 'processing')
-  const totalSteps = steps.value.length // Không trừ đi 1
+  const totalSteps = steps.value.length
 
   if (processingStep) {
-    return Math.min((completedSteps + 0.5) * (100 / totalSteps), 100) // Đảm bảo không vượt quá 100%
+    return Math.min((completedSteps + 0.5) * (100 / totalSteps), 100)
   }
-  return Math.min(completedSteps * (100 / totalSteps), 100) // Đảm bảo không vượt quá 100%
+  return Math.min(completedSteps * (100 / totalSteps), 100)
 })
 
 const getCurrentStepDescription = () => {

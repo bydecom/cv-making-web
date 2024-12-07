@@ -3,7 +3,7 @@
     <div class="relative py-3 sm:max-w-xl sm:mx-auto">
       <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
         <div class="max-w-md mx-auto">
-          <h1 class="text-2xl font-semibold mb-6 text-center">CV Data Extractor</h1>
+          <h1 class="text-2xl font-semibold mb-6 text-center">Convert Your CV To New Template</h1>
 
           <!-- File Upload Section -->
           <div class="mb-6">

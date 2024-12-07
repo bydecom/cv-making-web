@@ -6,19 +6,17 @@
       @export-cv="exportCV"
       @update-image="handleImageUpdate"
     />
-    <CvPreview ref="cvPreview" :cvData="cvData" :image="imageData" />
-    <CvPreview ref="cvPreview" :cvData="cvData" :image="imageData" />
+    <CvPreview ref="cvPreview" :cvData="cvData" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import CvEditor from './CvEditor.vue'
-import CvPreview from './CvPreview.vue'
+import CvEditor from './CvEditor1.vue'
+import CvPreview from './CvPreview1.vue'
 
 const route = useRoute()
-const router = useRouter()
 const imageData = ref('')
 const cvPreview = ref(null)
 
@@ -53,6 +51,18 @@ const templateData = {
       school: 'University of Technology',
       year: '2015'
     }
+  ],
+  achievements: [
+    {
+      title: 'Best Developer Award',
+      detail: 'Recognized for outstanding performance in software development.'
+    }
+  ],
+  projects: [
+    {
+      title: 'Project Alpha',
+      detail: 'Description of Project Alpha.'
+    }
   ]
 }
 
@@ -80,6 +90,18 @@ const formatCvData = (data) => {
           degree: edu.degree || '',
           school: edu.school || '',
           year: edu.year || ''
+        }))
+      : [],
+    achievements: Array.isArray(data.achievements)
+      ? data.achievements.map((ach) => ({
+          title: ach.title || '',
+          detail: ach.detail || ''
+        }))
+      : [],
+    projects: Array.isArray(data.projects)
+      ? data.projects.map((proj) => ({
+          title: proj.title || '',
+          detail: proj.detail || ''
         }))
       : []
   }

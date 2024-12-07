@@ -1,22 +1,18 @@
 <template>
   <div class="cv-container">
-    <Template2 :cvData="cvData" />
+    <Template3 :cvData="cvData" />
   </div>
 </template>
 
 <script setup>
 import { defineProps, ref, defineExpose } from 'vue' // Import ref here
 //import html2pdf from 'html2pdf.js'
-//import Template4 from './templates/template4.vue'
-// import Template1 from './templates/template1.vue'
-import Template2 from './templates/template2.vue'
-
+import Template3 from './templates/template3.vue'
+import jsPDF from 'jspdf'
 // Use defineProps directly
 const props = defineProps(['cvData', 'image']) // Add image prop
 const isExporting = ref(false)
 // const imageData = ref('') // New ref to hold the image data
-
-import jsPDF from 'jspdf'
 
 const exportCv = async () => {
   isExporting.value = true
@@ -30,7 +26,7 @@ const exportCv = async () => {
         doc.save(`${props.cvData.firstName}_${props.cvData.lastName}.pdf`)
       },
       html2canvas: {
-        scale: 0.75 // Giảm kích thước xuống 75% so với gốc
+        scale: 0.55 // Giảm kích thước xuống 75% so với gốc
       }
     })
   } catch (error) {
@@ -50,7 +46,7 @@ defineExpose({ exportCv }) // This line exposes the exportPDF method
   max-width: 100%; /* Ensure it doesn't exceed 100% */
   margin: 0 auto;
   overflow: auto;
-  min-height: 850px; /* Adjust this value as needed */
+  min-height: 1438.49px; /* Adjust this value as needed */
   page-break-after: always; /* Ensure it breaks after the CV */
 }
 
@@ -65,7 +61,6 @@ defineExpose({ exportCv }) // This line exposes the exportPDF method
 }
 .export-button {
   padding: 10px 20px;
-  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;

@@ -17,12 +17,7 @@
               Resume
             </router-link>
             <router-link to="/convert" class="hover:text-gray-800">Convert CV</router-link>
-            <a
-              class="hover:text-gray-800"
-              href="/reviewcv"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a class="hover:text-gray-800" href="/reviewcv" rel="noopener noreferrer">
               CV Review
             </a>
             <router-link to="/emaileditor" class="flex items-center hover:text-gray-800">
@@ -97,10 +92,10 @@
             </router-link>
 
             <router-link
-              to="/about"
+              to="/auth"
               class="block bg-white text-blue-500 font-semibold px-4 py-2 rounded-md border border-blue-500 hover:bg-blue-50 transition duration-300 mt-2"
             >
-              About Us
+              Login
             </router-link>
           </div>
         </div>
@@ -112,10 +107,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
-const authStore = useAuthStore()
 const isMenuOpen = ref(false)
 const isHeaderVisible = ref(true)
 const showUserMenu = ref(false)

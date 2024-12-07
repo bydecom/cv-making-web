@@ -14,7 +14,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import CvEditor from './CvEditor1.vue'
-import CvPreview from './CvPreview.vue'
+import CvPreview from './CvPreview2.vue'
 
 const route = useRoute()
 const imageData = ref('')

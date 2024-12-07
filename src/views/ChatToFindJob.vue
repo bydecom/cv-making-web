@@ -143,7 +143,7 @@ const submitChat = async () => {
 
   try {
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash-002',
+      model: import.meta.env.VITE_APP_AI_MODEL,
       systemInstruction: `You are a recruitment matcher that validates  find the most suitabl job IDs from a given list of recruitments.
 
       Your tasks:

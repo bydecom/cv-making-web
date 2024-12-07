@@ -1,22 +1,18 @@
 <template>
   <div class="cv-container">
-    <Template2 :cvData="cvData" />
+    <Template1 :cvData="cvData" />
   </div>
 </template>
 
 <script setup>
 import { defineProps, ref, defineExpose } from 'vue' // Import ref here
 //import html2pdf from 'html2pdf.js'
-//import Template4 from './templates/template4.vue'
-// import Template1 from './templates/template1.vue'
-import Template2 from './templates/template2.vue'
-
+import Template1 from './templates/template1.vue'
+import jsPDF from 'jspdf'
 // Use defineProps directly
 const props = defineProps(['cvData', 'image']) // Add image prop
 const isExporting = ref(false)
 // const imageData = ref('') // New ref to hold the image data
-
-import jsPDF from 'jspdf'
 
 const exportCv = async () => {
   isExporting.value = true

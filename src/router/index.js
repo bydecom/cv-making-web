@@ -1,62 +1,50 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import ExampleView from '../views/ExampleView.vue'
 import ReaderView from '../views/ReaderView.vue'
 import ChooseTemplatesView from '../views/ChooseTemplatesView.vue'
 import EditPage from '../views/EditPage.vue'
-import LoginView from '@/views/LoginView.vue'
+import EditPage1 from '@/views/EditPage1.vue'
+import EditPage2 from '../views/EditPage2.vue'
+import EditPage3 from '../views/EditPage3.vue'
 import EmailEditor from '@/views/EmailEditor.vue'
 import ConvertPage from '../views/ConvertPage.vue'
 import AboutView from '@/views/AboutView.vue'
 import EnhanceEmail from '@/views/EnhanceEmail.vue'
 import ReviewCV from '@/views/ReviewCV.vue'
-import GetRecruitmentIDTitle from '@/views/GetRecruitmentIDTitle.vue'
-import GetRecruitmentID from '@/views/GetRecruitmentID.vue'
-import ChatToFindJob from '@/views/ChatToFindJob.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/login',
-      name: 'login',
-      component: LoginView
-    },
-    {
-      path: '/chat',
-      name: 'chat',
-      component: ChatToFindJob
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: GetRecruitmentIDTitle
-    },
-    {
-      path: '/test1',
-      name: 'test1',
-      component: GetRecruitmentID
-    },
-    {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView
     },
 
-    {
-      path: '/example',
-      name: 'example',
-      component: ReaderView
-    },
     {
       path: '/templates',
       name: 'ChooseTemplates',
       component: ChooseTemplatesView
     },
     {
-      path: '/templates/edit',
+      path: '/templates/edit0',
       name: 'EditPage',
       component: EditPage
+    },
+    {
+      path: '/templates/edit2',
+      name: 'EditPage2',
+      component: EditPage2
+    },
+    {
+      path: '/templates/edit1',
+      name: 'EditPage1',
+      component: EditPage1
+    },
+    {
+      path: '/templates/edit3',
+      name: 'EditPage3',
+      component: EditPage3
     },
     {
       path: '/emaileditor',

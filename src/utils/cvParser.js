@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
 
 const model = genAI.getGenerativeModel({
-  model: 'gemini-1.5-flash',
+  model: import.meta.env.VITE_APP_AI_MODEL,
   systemInstruction: `You are a CV rewrite that extracts information from CV text into structured JSON format.
     You must ONLY return a valid JSON object with the following structure, no other text:
     {

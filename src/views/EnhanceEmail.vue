@@ -141,15 +141,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { GoogleGenerativeAI } from '@google/generative-ai'
 
 const emailContent = ref('')
 const enhancedEmail = ref('')
 const editableEmail = ref('')
 const isLoading = ref(false)
 const showModal = ref(false)
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
 const enhanceEmail = async () => {
   if (!emailContent.value) {
@@ -161,9 +158,19 @@ const enhanceEmail = async () => {
   enhancedEmail.value = '' // Clear previous enhanced email
 
   try {
-    const prompt = `Write a complete email that I can copy and send to the employer using the prompts and emails I provided:\nEmail: \n\n${emailContent.value}\nEnhance prompt:`
-    const result = await model.generateContent(prompt)
-    enhancedEmail.value = result.response.text() // Get enhanced email from AI
+    const response = await fetch('http://localhost:3000/email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ Email: { value: emailContent.value } })
+    })
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    enhancedEmail.value = await response.json() // Get enhanced email from backend
   } catch (error) {
     console.error('Error enhancing email:', error)
     alert('An error occurred while enhancing the email.')

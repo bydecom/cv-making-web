@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen p-8 flex justify-center items-center">
+  <div class="w-3/4 p-8 bg-white overflow-auto">
     <div class="bg-white rounded-lg shadow-lg p-8 max-w-4xl w-full">
       <div class="header text-center mb-8">
         <h1 class="name text-3xl font-bold">{{ cvData.firstName }} {{ cvData.lastName }}</h1>
@@ -74,7 +74,7 @@ const props = defineProps(['cvData'])
 
 h2 {
   font-size: 1.5rem;
-  border-bottom: 2px solid #333;
+  border-bottom: 1px solid #333;
   padding-bottom: 5px;
   margin-bottom: 10px;
 }

@@ -5,8 +5,8 @@
       <div class="card-content p-8">
         <div class="grid grid-cols-3 gap-4">
           <div class="col-span-2">
-            <h1 class="text-3xl font-bold">{{ cvData.firstName }} {{ cvData.lastName }}</h1>
-            <p class="text-xl text-gray-600 mb-4">{{ cvData.jobTitle }}</p>
+            <h1 class="text-3xl font-bold mb-2">{{ cvData.firstName }} {{ cvData.lastName }}</h1>
+            <p class="text-xl text-gray-600 mb-2 mt-2">{{ cvData.jobTitle }}</p>
             <p class="mb-2">{{ cvData.summary }}</p>
           </div>
           <div class="text-right">
@@ -15,8 +15,9 @@
             <p>{{ cvData.location }}</p>
           </div>
         </div>
-        <div class="mt-6">
-          <h2 class="text-xl font-semibold mb-2">Skills</h2>
+
+        <div class="mt-6" v-if="cvData.skills.length">
+          <h2 class="text-2xl font-semibold mb-2">Skills</h2>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="(skill, index) in cvData.skills"
@@ -27,19 +28,39 @@
             </span>
           </div>
         </div>
-        <div class="mt-12">
-          <h2 class="text-xl font-semibold mb-2">Experience</h2>
-          <div v-for="(exp, index) in cvData.experience" :key="index" class="mb-4">
-            <h3 class="font-semibold">{{ exp.title }}</h3>
-            <p class="text-gray-600">{{ exp.company }} | {{ exp.period }}</p>
-            <p>{{ exp.description }}</p>
-          </div>
-        </div>
-        <div class="mt-12">
-          <h2 class="text-xl font-semibold mb-2">Education</h2>
+
+        <div class="mt-6" v-if="cvData.education.length">
+          <h2 class="text-2xl font-semibold mb-2">Education</h2>
           <div v-for="(edu, index) in cvData.education" :key="index">
             <h3 class="font-semibold">{{ edu.degree }}</h3>
             <p>{{ edu.school }}, {{ edu.year }}</p>
+          </div>
+        </div>
+
+        <div class="mt-6" v-if="cvData.experience.length">
+          <h2 class="text-2xl font-semibold mb-2">Experience</h2>
+          <div v-for="(exp, index) in cvData.experience" :key="index" class="mb-4">
+            <h3 class="font-semibold">{{ exp.title }}</h3>
+            <p class="text-gray-600">
+              {{ exp.company }}<span v-if="exp.company && exp.period"> | </span>{{ exp.period }}
+            </p>
+            <p>{{ exp.description }}</p>
+          </div>
+        </div>
+
+        <div class="mt-6" v-if="cvData.projects.length">
+          <h2 class="text-2xl font-semibold mb-2">Projects</h2>
+          <div v-for="(project, index) in cvData.projects" :key="index" class="mb-4">
+            <h3 class="font-semibold">{{ project.title }}</h3>
+            <p>{{ project.detail }}</p>
+          </div>
+        </div>
+
+        <div class="mt-6" v-if="cvData.achievements.length">
+          <h2 class="text-2xl font-semibold mb-2">Achievements</h2>
+          <div v-for="(achievement, index) in cvData.achievements" :key="index" class="mb-4">
+            <h3 class="font-semibold">{{ achievement.title }}</h3>
+            <p>{{ achievement.detail }}</p>
           </div>
         </div>
       </div>
