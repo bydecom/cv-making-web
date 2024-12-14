@@ -142,6 +142,16 @@
               Edit CV
             </button> -->
           </div>
+
+          <!-- Thêm nút bên dưới kết quả -->
+          <div v-if="extractedData" class="mt-4 text-center">
+            <router-link
+              to="/convert"
+              class="bg-white text-indigo-800 px-8 py-4 rounded-md text-lg font-semibold hover:bg-indigo-100 transition duration-300"
+            >
+              Edit your CV now
+            </router-link>
+          </div>
         </div>
       </div>
     </div>

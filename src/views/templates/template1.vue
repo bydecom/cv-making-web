@@ -42,7 +42,7 @@
           <div v-for="(exp, index) in cvData.experience" :key="index" class="mb-4">
             <h3 class="font-semibold">{{ exp.title }}</h3>
             <p class="text-gray-600">
-              {{ exp.company }}<span v-if="exp.company && exp.period"> | </span>{{ exp.period }}
+              {{ exp.title }}<span v-if="exp.company && exp.period"> | </span>{{ exp.period }}
             </p>
             <p>{{ exp.description }}</p>
           </div>

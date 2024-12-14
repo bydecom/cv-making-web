@@ -5,7 +5,9 @@
       Each resume template is designed to follow the exact rules you need to get hired faster. Use
       our resume templates and get free access to 18 more career tools!
     </p>
-    <button class="bg-blue-500 text-white px-6 py-3 rounded mb-8">Create my resume</button>
+    <a href="templates/edit0">
+      <button class="bg-blue-500 text-white px-6 py-3 rounded mb-8">Create my resume</button>
+    </a>
 
     <div class="flex justify-center space-x-4 mb-8">
       <button
@@ -76,6 +78,7 @@ import resume01 from '@/assets/1.jpg'
 import resume02 from '@/assets/2.jpg'
 import resume03 from '@/assets/3.jpg'
 import resume04 from '@/assets/4.jpg'
+import resume05 from '@/assets/5.jpg'
 
 export default {
   data() {
@@ -108,8 +111,16 @@ export default {
           image: resume04,
           category: 'Creative',
           description: 'A creative template for designers.'
+        },
+        {
+          id: 5,
+          name: 'Academic Edge',
+          image: resume05,
+          category: 'Academic',
+          description: 'A creative template for academic.'
         }
       ],
+
       categories: ['All', 'Professional', 'Minimalist', 'Tech', 'Creative', 'Academic'],
       selectedTemplate: null,
       activeCategory: 'All',

@@ -69,9 +69,19 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Enhanced Email Content -->
               <div class="prose max-w-none">
                 <div class="bg-white p-6 rounded-lg shadow-inner whitespace-pre-wrap text-gray-700">
                   {{ enhancedEmail }}
+                </div>
+              </div>
+
+              <!-- Explanation Section -->
+              <div v-if="enhancementExplanation" class="mt-6 bg-blue-50 p-6 rounded-lg">
+                <h3 class="text-lg font-semibold text-blue-800 mb-4">Enhancement Explanation</h3>
+                <div class="text-gray-700 whitespace-pre-wrap">
+                  {{ enhancementExplanation }}
                 </div>
               </div>
             </div>
@@ -141,12 +151,18 @@
 
 <script setup>
 import { ref } from 'vue'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 
 const emailContent = ref('')
 const enhancedEmail = ref('')
+const enhancementExplanation = ref('')
 const editableEmail = ref('')
 const isLoading = ref(false)
 const showModal = ref(false)
+
+// Initialize Google Generative AI
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-8b' })
 
 const enhanceEmail = async () => {
   if (!emailContent.value) {
@@ -155,22 +171,37 @@ const enhanceEmail = async () => {
   }
 
   isLoading.value = true
-  enhancedEmail.value = '' // Clear previous enhanced email
+  enhancedEmail.value = ''
+  enhancementExplanation.value = ''
 
   try {
-    const response = await fetch('http://localhost:3000/email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ Email: { value: emailContent.value } })
-    })
+    const prompt = `Please enhance the following email. Improve its tone, clarity, and professional style. 
+    Provide suggestions for better structure, grammar, and word choice. 
+    Maintain the original intent and key information.
+    Important: Only response Title and Email content wwith no more explain
+    Original Email:
+    ${emailContent.value}
+    ${import.meta.env.VITE_APP_ENHANCE_EMAIL_PROMPT}
+    `
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
+    const result = await model.generateContent(prompt)
+    const fullResponse = result.response.text()
+
+    // Parse the response
+    const emailMatch = fullResponse.match(
+      /Enhancement of the Original Email:(.*?)\n\n\*\*Explanation/s
+    )
+    const explanationMatch = fullResponse.match(/\*\*Explanation of Improvements:\*(.*)/s)
+
+    if (emailMatch && explanationMatch) {
+      enhancedEmail.value = emailMatch[1].trim()
+      enhancementExplanation.value = explanationMatch[1].trim()
+    } else {
+      // Fallback if parsing fails
+      enhancedEmail.value = fullResponse
     }
 
-    enhancedEmail.value = await response.json() // Get enhanced email from backend
+    editableEmail.value = enhancedEmail.value
   } catch (error) {
     console.error('Error enhancing email:', error)
     alert('An error occurred while enhancing the email.')
@@ -213,4 +244,39 @@ const saveEditedEmail = () => {
 
 <style scoped>
 /* Add any specific styles for the Enhance Email view here */
+.prose {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+textarea {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    sans-serif;
+  resize: vertical;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Add some styling for the explanation section */
+.explanation-section {
+  background-color: #f0f5ff;
+  border-top: 1px solid #e6f2ff;
+}
 </style>

@@ -2,10 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ReaderView from '../views/ReaderView.vue'
 import ChooseTemplatesView from '../views/ChooseTemplatesView.vue'
-import EditPage from '../views/EditPage.vue'
+import EditPage from '../views/Editpage4.vue'
 import EditPage1 from '@/views/EditPage1.vue'
 import EditPage2 from '../views/EditPage2.vue'
 import EditPage3 from '../views/EditPage3.vue'
+import EditPage4 from '../views/Editpage4.vue'
 import EmailEditor from '@/views/EmailEditor.vue'
 import ConvertPage from '../views/ConvertPage.vue'
 import AboutView from '@/views/AboutView.vue'
@@ -47,6 +48,11 @@ const router = createRouter({
       component: EditPage3
     },
     {
+      path: '/templates/edit4',
+      name: 'EditPage4',
+      component: EditPage4
+    },
+    {
       path: '/emaileditor',
       name: 'emaileditor',
       component: EmailEditor
@@ -81,7 +87,10 @@ const router = createRouter({
       name: 'reviewcv',
       component: ReviewCV
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  }
 })
 
 export default router

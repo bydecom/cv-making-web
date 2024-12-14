@@ -120,11 +120,12 @@
             improved by data, trusted by millions of professionals.
           </p>
           <div class="flex items-center">
-            <button
-              class="bg-blue-500 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-blue-600 mr-4"
+            <a
+              href="/templates"
+              class="bg-blue-500 text-white px-6 py-4 rounded-md text-xl font-semibold hover:bg-blue-600"
             >
               Create my resume
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -183,11 +184,12 @@
             Win over employers and recruiters by using one of our 25+ elegant,
             professionally-designed resume templates. Download to PNG or PDF.
           </p>
-          <button
-            class="bg-white text-indigo-800 px-8 py-3 rounded-md text-lg font-semibold hover:bg-indigo-100 transition duration-300"
+          <a
+            href="/templates"
+            class="bg-white text-indigo-800 px-8 py-4 rounded-md text-lg font-semibold hover:bg-indigo-100 transition duration-300"
           >
             Select template
-          </button>
+          </a>
           <div class="mt-8 flex items-center">
             <div class="text-3xl text-green-400 mr-4">★★★★★</div>
             <div>
