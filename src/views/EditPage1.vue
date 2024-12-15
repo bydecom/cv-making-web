@@ -142,7 +142,47 @@ const handleImageUpdate = (newImage) => {
   imageData.value = newImage
 }
 
+// Hàm validate phone number
+const isValidPhoneNumber = (phone) => {
+  // Regex cho phép các format: +84..., 84..., 0... với 9-11 số
+  const phoneRegex = /^(\+84|84|0)[3|5|7|8|9][0-9]{8}$/
+  return phoneRegex.test(phone)
+}
+
+// Hàm kiểm tra các trường bắt buộc
+const validateRequiredFields = (data) => {
+  const required = {
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    email: 'Email',
+    phone: 'Phone Number',
+    jobTitle: 'Job Title'
+  }
+
+  const missingFields = []
+  for (const [field, label] of Object.entries(required)) {
+    if (!data[field]?.trim()) {
+      missingFields.push(label)
+    }
+  }
+
+  return missingFields
+}
+
 const exportCV = () => {
+  // Kiểm tra các trường bắt buộc
+  const missingFields = validateRequiredFields(cvData.value)
+  if (missingFields.length > 0) {
+    alert(`Please fill in the following required fields:\n${missingFields.join('\n')}`)
+    return
+  }
+
+  // Validate phone number
+  if (!isValidPhoneNumber(cvData.value.phone)) {
+    alert('Please enter a valid Vietnamese phone number')
+    return
+  }
+
   if (cvPreview.value && typeof cvPreview.value.exportCv === 'function') {
     cvPreview.value.exportCv()
   } else {
